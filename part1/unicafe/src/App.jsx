@@ -16,6 +16,27 @@ const puntage ={
 const Header = ({children}) => <h1>{children}</h1>
 const Button = ({onClick, children}) => <button onClick={onClick}>{children}</button>
 const Content = ({children, type}) => <p>{type}: {children}</p>
+const Statistics = ({comments}) => {
+  const Average = (comments) =>{
+    const total = Object.entries(comments).reduce((acc, [key, value]) => acc + (puntage[key] * value), 0);
+    return total / Object.keys(comments).length;
+  }
+  const Positive = (comments) => {
+    let total = Object.entries(comments).reduce((acc, [key, value]) => acc + value, 0);
+    return total === 0 ? 0:comments.good / total;
+  }
+
+  return(
+    <>
+      <Header>statistics</Header>
+      <Content type="Good">{comments.good}</Content>
+      <Content type="Neutral">{comments.neutral}</Content>
+      <Content type="Bad">{comments.bad}</Content>
+      <Content type="Average">{Average(comments)}</Content>
+      <Content type="Positive">{Positive(comments)}%</Content>
+    </>
+  )
+}
 
 const App = () => {
   const [comments, setComments] = useState(initComents)
@@ -32,14 +53,6 @@ const App = () => {
     setComments({...comments, bad: comments.bad + 1})
   }
 
-  const Average = (comments) =>{
-    const total = Object.entries(comments).reduce((acc, [key, value]) => acc + (puntage[key] * value), 0);
-    return total / Object.keys(comments).length;
-  }
-  const Positive = (comments) => {
-    let total = Object.entries(comments).reduce((acc, [key, value]) => acc + value, 0);
-    return total === 0 ? 0:comments.good / total;
-  }
 
   return (
     <div>
@@ -47,12 +60,7 @@ const App = () => {
       <Button onClick={handleGood}>good</Button>
       <Button onClick={handleNeutral}>neutral</Button>
       <Button onClick={handleBad}>bad</Button>
-      <Header>statistics</Header>
-      <Content type="Good">{comments.good}</Content>
-      <Content type="Neutral">{comments.neutral}</Content>
-      <Content type="Bad">{comments.bad}</Content>
-      <Content type="Average">{Average(comments)}</Content>
-      <Content type="Positive">{Positive(comments)}%</Content>
+      <Statistics comments={comments}/>
 
     </div>
   )
