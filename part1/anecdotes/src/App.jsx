@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { useState } from "react"
 
 const anecdotes = [
@@ -15,6 +16,14 @@ const App = () => {
 
   const [selected, setSelected] = useState(Math.floor(Math.random() * (anecdotes.length)))
   const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0))
+  const [mostVotes, setMostVotes] = useState(selected)
+
+  useEffect(() => {
+      let max = votes.indexOf(Math.max(...votes));
+      if (votes[max] > votes[mostVotes]) {
+        setMostVotes(max)
+      }
+    }, [votes, mostVotes]);
 
   const handleSelected = () => {
     if (selected === anecdotes.length - 1) {
@@ -35,6 +44,9 @@ const App = () => {
       <p>has {votes[selected]}</p>
       <button onClick={handleVote}> Vote </button>
       <button onClick={handleSelected}>Next anecdote</button>
+      <h1>Anecdote with most votes </h1>
+      <p>{anecdotes[mostVotes]}</p>
+      <p>has {votes[mostVotes]}</p>
     </div>
   )
 }
