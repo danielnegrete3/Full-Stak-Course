@@ -25,15 +25,22 @@ const Statistics = ({comments}) => {
     let total = Object.entries(comments).reduce((acc, [key, value]) => acc + value, 0);
     return total === 0 ? 0:comments.good / total;
   }
+  const total = Object.entries(comments).reduce((acc, [key, value]) => acc + value, 0);
 
   return(
     <>
       <Header>statistics</Header>
-      <Content type="Good">{comments.good}</Content>
-      <Content type="Neutral">{comments.neutral}</Content>
-      <Content type="Bad">{comments.bad}</Content>
-      <Content type="Average">{Average(comments)}</Content>
-      <Content type="Positive">{Positive(comments)}%</Content>
+      {
+        total === 0 ? <p>No feedback given</p> : 
+          <> 
+            <Content type="Good">{comments.good}</Content>
+            <Content type="Neutral">{comments.neutral}</Content>
+            <Content type="Bad">{comments.bad}</Content>
+            <Content type="Average">{Average(comments)}</Content>
+            <Content type="Positive">{Positive(comments)}%</Content> 
+          </>
+      }
+      
     </>
   )
 }
