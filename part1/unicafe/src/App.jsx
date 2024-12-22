@@ -15,7 +15,15 @@ const puntage ={
 
 const Header = ({children}) => <h1>{children}</h1>
 const Button = ({onClick, children}) => <button onClick={onClick}>{children}</button>
-const Content = ({children, type}) => <p>{type}: {children}</p>
+const Content = ({children, type}) => {
+
+  return(
+    <tr>
+      <td>{type}</td>
+      <td>{children}</td>
+    </tr>
+  )
+}
 const Statistics = ({comments}) => {
   const Average = (comments) =>{
     const total = Object.entries(comments).reduce((acc, [key, value]) => acc + (puntage[key] * value), 0);
@@ -32,13 +40,24 @@ const Statistics = ({comments}) => {
       <Header>statistics</Header>
       {
         total === 0 ? <p>No feedback given</p> : 
-          <> 
-            <Content type="Good">{comments.good}</Content>
-            <Content type="Neutral">{comments.neutral}</Content>
-            <Content type="Bad">{comments.bad}</Content>
-            <Content type="Average">{Average(comments)}</Content>
-            <Content type="Positive">{Positive(comments)}%</Content> 
-          </>
+          <table> 
+            <caption>
+              Statistic of the comments of Unicafe
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Statistic</th>
+                <th scope="col">data</th>
+              </tr>
+            </thead>
+            <tbody>
+              <Content type="Good">{comments.good}</Content>
+              <Content type="Neutral">{comments.neutral}</Content>
+              <Content type="Bad">{comments.bad}</Content>
+              <Content type="Average">{Average(comments)}</Content>
+              <Content type="Positive">{Positive(comments)}%</Content> 
+            </tbody>
+          </table>
       }
       
     </>
