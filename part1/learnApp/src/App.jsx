@@ -1,4 +1,4 @@
-
+import { useState } from 'react'
 const Hello = () => {
   return (
     <div>
@@ -8,11 +8,19 @@ const Hello = () => {
 }
 
 const App = () => {
+  const [ counter, setCounter ] = useState(0)
+
+  setTimeout(
+    () => setCounter(counter + 1),
+    1000
+  )
+
   return (
     <div>
       <h1>Greetings</h1>
 
       <Hello />
+      <p>{counter}</p>
     </div>
   )
 }
