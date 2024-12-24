@@ -1,21 +1,22 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios';
 import Filter from './components/Filter';
 import Form from './components/Form';
 import Persons from './components/Persons';
+import servicePersons from './services/servicePersons';
 
 function App() {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newPhone, setNewPhone] = useState("")
   const [filter, setFilter] = useState("");
+  const {getAll, create, update,deletePerson} = servicePersons;
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data);
-      })
+    getAll().then(initialPersons => {
+      setPersons(initialPersons);
+    }).catch(error => {
+      alert(`Fail to fetch data: ${error}`);
+    });
   }, []);
   
 
@@ -38,19 +39,49 @@ function App() {
       return;
     }
 
-    if (persons.some(person => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
-      return;
+    const alreadyExist = persons.find(person => person.name === newName);
+    console.log(alreadyExist);
+
+    if (alreadyExist) {
+      const confirmUpdate = window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`);
+      if (confirmUpdate) {
+        const updatedPerson = { ...alreadyExist, number: newPhone };
+        update(alreadyExist.id, updatedPerson)
+        .then(returnedPerson => {
+          setPersons(persons.map(person => person.id !== alreadyExist.id ? person : returnedPerson));
+        })
+        .catch(error => {
+          alert(`Fail to update: ${error}`);
+        });
+      }
+    }else{
+      const personObject = {
+        name: newName,
+        number: newPhone,
+      };
+  
+      create(personObject).then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson));
+      }).catch(error => {
+        alert(`Fail to add : ${error}`);
+      });
     }
 
-    const personObject = {
-      name: newName,
-      number: newPhone,
-      id: persons.length + 1
-    }
-    setPersons(persons.concat(personObject));
     setNewName("");
     setNewPhone("");
+  }
+
+  const handleDeletePerson = (id) => {
+    const confirmDelete = window.confirm(`Delete ${persons.find(person => person.id === id).name}`);
+    if (confirmDelete) {
+      deletePerson(id)
+      .then(() => {
+        setPersons(persons.filter(person => person.id !== id));
+      })
+      .catch(error => {
+        alert(`Fail to delete: ${error}`);
+      });
+    }
   }
 
   const personsToShow = persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()));
@@ -62,9 +93,9 @@ function App() {
       <h3>Add a new</h3>
         <Form onSubmit={addPerson} newName={newName} handleNewName={handleNewName} newPhone={newPhone} handleNewPhone={handleNewPhone} />
       <h3>phones</h3>
-        <Persons persons={personsToShow} />
+        <Persons persons={personsToShow} deletePerson={handleDeletePerson} />
     </>
   )
 }
 
-export default App
+export default App;
