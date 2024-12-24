@@ -1,11 +1,14 @@
 import { useState } from 'react'
+import Filter from './components/Filter';
+import Form from './components/Form';
+import Persons from './components/Persons';
 
 function App() {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
+    { name: 'Arto Hellas', phone: '040-123456', id: 1 },
+    { name: 'Ada Lovelace', phone: '39-44-5323523', id: 2 },
+    { name: 'Dan Abramov', phone: '12-43-234345', id: 3 },
+    { name: 'Mary Poppendieck', phone: '39-23-6423122', id: 4 }
   ]);
 
   const [newName, setNewName] = useState("");
@@ -51,21 +54,11 @@ function App() {
   return (
     <>
       <h2>Phonebook</h2>
-        <p>Filter show with <input type="text" value={filter} onChange={handleFilter}/></p>
-      <h2>Add a new</h2>
-      <form onSubmit={addPerson}>
-        <input type="text" value={newName} onChange={handleNewName} placeholder='Write your name'/>
-        <br />
-        <input type="text" value={newPhone} onChange={handleNewPhone} placeholder='Write yur phone her' />
-        <br />
-        <button type='submit'>Add</button>
-      </form>
-      <h2>Numbers</h2>
-      <ul>
-        {personsToShow.map(person => (
-          <li key={person.id}>name: {person.name} phone: {person.phone}</li>
-        ))}
-      </ul>
+        <Filter filter={filter} handleFilter={handleFilter} />
+      <h3>Add a new</h3>
+        <Form onSubmit={addPerson} newName={newName} handleNewName={handleNewName} newPhone={newPhone} handleNewPhone={handleNewPhone} />
+      <h3>phones</h3>
+        <Persons persons={personsToShow} />
     </>
   )
 }
