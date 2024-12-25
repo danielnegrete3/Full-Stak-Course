@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Filter from './components/Filter';
 import Form from './components/Form';
 import Persons from './components/Persons';
+import Message from './components/Message';
 import servicePersons from './services/servicePersons';
 
 function App() {
@@ -9,13 +10,22 @@ function App() {
   const [newName, setNewName] = useState("");
   const [newPhone, setNewPhone] = useState("")
   const [filter, setFilter] = useState("");
+  const [message, setMessage] = useState(null);
   const {getAll, create, update,deletePerson} = servicePersons;
+
+  const handleMessage = ({text, type})=>{
+    setMessage({text, type});
+
+    setTimeout(()=>{
+      setMessage(null);
+    }, 5000);
+  }
 
   useEffect(() => {
     getAll().then(initialPersons => {
       setPersons(initialPersons);
     }).catch(error => {
-      alert(`Fail to fetch data: ${error}`);
+      handleMessage({text: `Fail to fetch data: ${error}`, type: "error"});
     });
   }, []);
   
@@ -35,7 +45,7 @@ function App() {
   const addPerson = (event) => {
     event.preventDefault();
     if (newName === "" || newPhone === "") {
-      alert("Name and phone cannot be empty");
+      handleMessage({text: "Name and phone cannot be empty", type: "error"});
       return;
     }
 
@@ -49,9 +59,11 @@ function App() {
         update(alreadyExist.id, updatedPerson)
         .then(returnedPerson => {
           setPersons(persons.map(person => person.id !== alreadyExist.id ? person : returnedPerson));
+          handleMessage({text: `Update success `, type: "success"});
+
         })
         .catch(error => {
-          alert(`Fail to update: ${error}`);
+          handleMessage({text: `Fail to update: ${error}`, type: "error"});
         });
       }
     }else{
@@ -62,8 +74,9 @@ function App() {
   
       create(personObject).then(returnedPerson => {
         setPersons(persons.concat(returnedPerson));
+        handleMessage({text: `Create success `, type: "success"});
       }).catch(error => {
-        alert(`Fail to add : ${error}`);
+        handleMessage({text: `Fail to create: ${error}`, type: "error"});
       });
     }
 
@@ -77,9 +90,10 @@ function App() {
       deletePerson(id)
       .then(() => {
         setPersons(persons.filter(person => person.id !== id));
+        handleMessage({text: "Delete success", type: "success"});
       })
       .catch(error => {
-        alert(`Fail to delete: ${error}`);
+        handleMessage({text: `Fail to delete: ${error}`, type: "error"});
       });
     }
   }
@@ -89,6 +103,7 @@ function App() {
   return (
     <>
       <h2>Phonebook</h2>
+        <Message message={message}/>
         <Filter filter={filter} handleFilter={handleFilter} />
       <h3>Add a new</h3>
         <Form onSubmit={addPerson} newName={newName} handleNewName={handleNewName} newPhone={newPhone} handleNewPhone={handleNewPhone} />
