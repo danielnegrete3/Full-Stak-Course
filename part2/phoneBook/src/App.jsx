@@ -63,7 +63,7 @@ function App() {
 
         })
         .catch(error => {
-          handleMessage({text: `Fail to update: ${error}`, type: "error"});
+          handleMessage({text: `Fail to update: ${error.response.data.error}`, type: "error"});
         });
       }
     }else{
@@ -76,7 +76,7 @@ function App() {
         setPersons(persons.concat(returnedPerson));
         handleMessage({text: `Create success `, type: "success"});
       }).catch(error => {
-        handleMessage({text: `Fail to create: ${error}`, type: "error"});
+        handleMessage({text: `Fail to create: ${error.response.data.error}`, type: "error"});
       });
     }
 
