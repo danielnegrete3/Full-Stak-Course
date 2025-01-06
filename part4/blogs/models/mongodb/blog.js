@@ -18,6 +18,11 @@ class BlogModel {
     return Blog.find({_id: id})
   }
 
+  static async create({input}){
+    const newBlog = new Blog(input)
+    return newBlog.save()
+  }
+
 }
 
 module.exports = {BlogModel}

@@ -1,2 +1,12 @@
 ### Buscar todos los blogs
-http://localhost:3001/api/blogs
+GET http://localhost:3001/api/blogs
+
+### Make a new  blog
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+    "title": "New Blog",
+    "author": "Daniel A",
+    "url" : "http/simon.com"
+}

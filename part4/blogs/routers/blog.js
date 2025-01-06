@@ -6,6 +6,7 @@ const createBlogRouter = ({BlogModel}) => {
     const blogController = new BlogController({BlogModel})
     
     BlogRouter.get('/', blogController.getAll)
+    BlogRouter.post('/', blogController.create)
     
     return BlogRouter
 }
