@@ -1,12 +1,28 @@
 ### Buscar todos los blogs
 GET http://localhost:3001/api/blogs
 
+### Buscar blog por id
+GET http://localhost:3001/api/blogs/67a19d0892422b1bbcbada66
+
+### Delete un blog
+DELETE  http://localhost:3001/api/blogs/67a1a2cccfe5689f374a5e5e
+
 ### Make a new  blog
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
 
 {
     "title": "New Blog",
-    "author": "Daniel A",
+    "author": "Daniel Aer",
+    "url" : "http/simon.com"
+}
+
+### update a new  blog
+PUT http://localhost:3001/api/blogs/67a1a470cae65aadbf7be4a6
+Content-Type: application/json
+
+{
+    "title": "New Bloged",
+    "author": "Daniel Aeres",
     "url" : "http/simon.com"
 }

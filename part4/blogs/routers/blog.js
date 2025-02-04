@@ -7,6 +7,9 @@ const createBlogRouter = ({BlogModel}) => {
     
     BlogRouter.get('/', blogController.getAll)
     BlogRouter.post('/', blogController.create)
+    BlogRouter.get('/:id', blogController.getById)
+    BlogRouter.put('/:id', blogController.update)
+    BlogRouter.delete('/:id', blogController.delete)
     
     return BlogRouter
 }

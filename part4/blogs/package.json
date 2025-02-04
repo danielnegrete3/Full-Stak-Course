@@ -4,7 +4,8 @@
   "description": "An api about blogs",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
     "test:reverse": "node ./test/reverse.test.js",
     "test": "node ./test/blogs.test.js"
   },
@@ -13,10 +14,12 @@
   "devDependencies": {
     "eslint": "^8.57.1",
     "nodemon": "^3.1.9",
-    "standard": "^17.1.2"
+    "standard": "^17.1.2",
+    "supertest": "^7.0.0"
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.4.7",
     "express": "4.21.2",
     "mongoose": "8.9.3",
