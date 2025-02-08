@@ -4,6 +4,7 @@ const cors = require('cors')
 const {BlogModel} = require('./models/mongodb/blog')
 const {createBlogRouter} = require('./routers/blog')
 const middleware = require('./utils/middleware')
+require('express-async-errors')
 
 app.use(cors())
 app.use(express.json())

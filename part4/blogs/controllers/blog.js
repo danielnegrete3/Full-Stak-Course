@@ -24,6 +24,7 @@ class BlogController{
         try{
             console.log(req.body)
             const newBlog = await this.BlogModel.create({input:req.body})
+            res.status(201)
             res.json(newBlog)
         }
         catch(e){

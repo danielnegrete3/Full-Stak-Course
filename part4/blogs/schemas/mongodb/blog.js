@@ -19,19 +19,15 @@ const blogSchema = {
   }
 }
 
-const optionsBlogSchema = {
-  methods:{
-    toJson:{
-      transform: (document, returnedObject) => {
-        returnedObject.id = returnedObject._id.toString()
-        delete returnedObject._id
-        delete returnedObject.__v
-      }
-    }
-
-  }
+const createBlogSchema = () => {
+  const schema = new mongoose.Schema(blogSchema)
+  schema.set('toJSON', {
+    transform: (document, returnedObject) => {
+      returnedObject.id = returnedObject._id.toString()
+      delete returnedObject._id
+      delete returnedObject.__v
+  }})
+  return schema
 }
 
-const createBlogSchema = () => new mongoose.Schema(blogSchema,optionsBlogSchema)
-
-module.exports = {createBlogSchema,blogSchema,optionsBlogSchema}
+module.exports = {createBlogSchema,blogSchema}
