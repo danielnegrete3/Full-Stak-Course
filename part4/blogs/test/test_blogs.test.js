@@ -60,6 +60,24 @@ test('If the fields are missing when adding is answered with status 400',async (
     .expect(400)
 })
 
+test('Can delete a blog',async ()=>{
+  const blogsBefore = await helper.blogsInDb()
+  await api.delete(`/api/blogs/${blogsBefore[0].id}`)
+  const blogsAfter = await helper.blogsInDb()
+
+  assert.ok(blogsAfter.length < blogsBefore.length,'The number of blogs its less')
+  assert.deepStrictEqual(blogsBefore[1],blogsAfter[0],'was deleted')
+})
+
+test('Can update a blog', async ()=>{
+  const blogsBefore = await helper.blogsInDb()
+  const res = await api.put(`/api/blogs/${blogsBefore[0].id}`)
+              .send(helper.newBlog)
+  const {likes,id,...newBlog} = res.body
+
+  assert.deepStrictEqual(newBlog,helper.newBlog,'was updated')
+})
+
 after(async () => {
   await mongoose.connection.close()
 })

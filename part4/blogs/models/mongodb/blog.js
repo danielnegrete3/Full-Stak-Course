@@ -20,8 +20,12 @@ class BlogModel {
   }
 
   static async create({input}){
-    const newBlog = new Blog(input)
-    return newBlog.save()
+    try{
+      const newBlog = new Blog(input)
+      return newBlog.save()
+    }catch{
+      return 400
+    }
   }
 
   static async update({data,id}){
