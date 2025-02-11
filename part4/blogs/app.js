@@ -5,12 +5,15 @@ const {BlogModel} = require('./models/mongodb/blog')
 const {createBlogRouter} = require('./routers/blog')
 const middleware = require('./utils/middleware')
 require('express-async-errors')
+const {createUserRouter} = require('./routers/users')
+const {UserModel} = require('./models/mongodb/user')
 
 app.use(cors())
 app.use(express.json())
 
 app.use(middleware.requestLogger)
 app.use('/api/blogs', createBlogRouter({BlogModel}))
+app.use('/api/users', createUserRouter({UserModel}))
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
