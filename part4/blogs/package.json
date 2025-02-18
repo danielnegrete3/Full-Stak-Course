@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "An api about blogs",
   "main": "index.js",
+  "type": "commonjs",
   "scripts": {
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",

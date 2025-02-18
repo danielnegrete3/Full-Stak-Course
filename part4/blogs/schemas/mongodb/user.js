@@ -12,8 +12,7 @@ const userSchema = {
     blogs: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Blog',
-        null:true
+        ref: 'Blog'
       }
     ],
   }

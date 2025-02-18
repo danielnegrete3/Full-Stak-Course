@@ -19,21 +19,32 @@ class BlogModel {
     return Blog.find({_id: id}).populate('user')
   }
 
-  static async create({input}){
-    try{
+  static async create({input, user}){
       const newBlog = new Blog(input)
+
+      //  save in user
+      user.blogs.push(newBlog.id)
+      await user.save()
+      console.log(newBlog)
       return newBlog.save()
-    }catch{
-      return 400
+  }
+
+  static async update({data,id,user}){
+    return await Blog.findOneAndUpdate({_id:id,user:user.id},data,{ new: true,runValidators: true, context: 'query' }).populate('user')
+  }
+
+  static async delete({id,user}){
+    const blogDeleted = await Blog.findOneAndDelete({_id:id,user:user.id})
+    if(!blogDeleted) return null
+    
+    //  delete to user
+    const index = user.blogs.indexOf(id);
+    if (index > -1) {
+        user.blogs.splice(index, 1);
     }
-  }
+    await user.save()
 
-  static async update({data,id}){
-    return await Blog.findByIdAndUpdate(id,data,{ new: true,runValidators: true, context: 'query' }).populate('user')
-  }
-
-  static async delete({id}){
-    return await Blog.findByIdAndDelete(id)
+    return blogDeleted
   }
 
 }

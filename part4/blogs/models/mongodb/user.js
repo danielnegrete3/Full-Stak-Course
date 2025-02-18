@@ -26,13 +26,9 @@ class UserModel {
       }
     
       static async create({input}){
-        try{
           const newUser = new User(input)
-          console.log(newUser)
-          return newUser.save()
-        }catch{
-          return 400
-        }
+          return await newUser.save()
+
       }
     
       static async update({data,id}){

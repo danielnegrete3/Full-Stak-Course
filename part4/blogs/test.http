@@ -2,37 +2,39 @@
 GET http://localhost:3001/api/blogs
 
 ### Buscar blog por id
-GET http://localhost:3001/api/blogs/67a19d0892422b1bbcbada66
+GET http://localhost:3001/api/blogs/67b4e3d57448ece94adeefb3
 
 ### Delete un blog
-DELETE  http://localhost:3001/api/blogs/67a1a470cae65aadbf7be4a6
+DELETE  http://localhost:3001/api/blogs/67b4e3d57448ece94adeefb3
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRlcmUiLCJpZCI6IjY3YjNlNGFkMDk4MDRiOGE3NzQzNDZlZCIsImlhdCI6MTczOTkwODI1MH0.TTiyREDBvaIXK7m4-YTZhA_7l62F1mGK_UUmjiS5QQk
 
 ### Make a new  blog
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
-authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRlcmUiLCJpZCI6IjY3YjNlNGFkMDk4MDRiOGE3NzQzNDZlZCIsImlhdCI6MTczOTg0NDE1N30.Lt_TtD-Fh5NZOVCZi-i9wlQkR0fiWY5p0apP9DevIzI
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhbm4iLCJpZCI6IjY3YjRjMTlmODkyMjEwY2VlMjhlOGU0NSIsImlhdCI6MTczOTg5OTMzMX0.C5x7eVBY2-vSqzpNtZp4uF_xQiEyTO10Org5yRVVeCs
 
 {
-    "title": "New Blog",
+    "title": "Blog de prueba ",
     "url" : "http/simon.com"
 }
 
-### update a new  blog
-PUT http://localhost:3001/api/blogs/67a1a470cae65aadbf7be4a6
+### update a blog
+PUT http://localhost:3001/api/blogs/67b4e3d57448ece94adeefb3
 Content-Type: application/json
-authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRlcmUiLCJpZCI6IjY3YjNlNGFkMDk4MDRiOGE3NzQzNDZlZCIsImlhdCI6MTczOTg0NDE1N30.Lt_TtD-Fh5NZOVCZi-i9wlQkR0fiWY5p0apP9DevIzI
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRlcmUiLCJpZCI6IjY3YjNlNGFkMDk4MDRiOGE3NzQzNDZlZCIsImlhdCI6MTczOTkwODE2N30.Az0UpHtAZsLze0VnPEP1_DoM5fQdPAcAylo3u1sICgo
 
 {
-    "title": "New Bloged",
+    "title": "Sipuede con usuario distinto",
     "url" : "http/simoesn.com"
 }
+
 ### create an  user
 POST http://localhost:3001/api/users
 Content-Type: application/json
 
 {
-    "username": "dere",
-    "name": "Daniel Aeres",
+    "username": "dann",
+    "name": "Abril rio",
     "password" : "hee"
 }
 

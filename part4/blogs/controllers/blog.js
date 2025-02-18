@@ -1,4 +1,5 @@
-const {getDecodedToken} = require('../utils/jwt')
+const {getDecodedToken} = require('../utils/jwt');
+const { thorwOwnError } = require('../utils/ownErrors');
 
 class BlogController{
     constructor({BlogModel,UserModel}){
@@ -23,13 +24,8 @@ class BlogController{
     }
 
     async create(req, res){
-        const decodedToken = req.user
-
-        if (!decodedToken.id) {
-            return res.status(401).json({ error: 'token invalid' })
-        }
-
-        const user = await this.UserModel.findById({id:decodedToken.id})
+        const user = req.user
+    
         const {body} = req
         const bodyNewBlog = {
             title : body.title,
@@ -38,36 +34,40 @@ class BlogController{
             user: user.id
         }
 
-        const newBlog = await this.BlogModel.create({input:bodyNewBlog})
+        const newBlog = await this.BlogModel.create({input:bodyNewBlog,user})
         if(newBlog === 400) res.status(400)
+
         res.status(201)
         res.json(newBlog)
 
     }
 
     async update(req,res){
-        if (!decodedToken.id) {
-            return res.status(401).json({ error: 'token invalid' })
-        }
-
-        const user = await this.UserModel.findById({id:decodedToken.id})
+        const user = req.user
 
         const body = req.body;
         const id = req.params.id;
 
-        const find
         const blog = {
             title: body.title,
             url : body.url
         }
 
-        const blogUpdated = await this.BlogModel.update({id,data:blog})
+        const blogUpdated = await this.BlogModel.update({id,data:blog,user})
+
+        thorwOwnError({opt:!blogUpdated,message:'User does not own this blog'})
+
         res.json(blogUpdated)
     }
 
     async delete(req,res){
+        const user = req.user
+
         const id = req.params.id
-        const blogDeleted = await this.BlogModel.delete({id})
+        const blogDeleted = await this.BlogModel.delete({id,user})
+
+        thorwOwnError({opt:!blogDeleted,message:'User does not own this blog'})
+
         res.json(blogDeleted)
     }
 }

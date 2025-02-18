@@ -37,15 +37,24 @@ const errorHandler = (error, request, response, next) => {
   next(error)
 }
 
-const jwtMiddleware= (req,res,next) =>{
-  const decodedToken = getDecodedToken(req)
-  req.user = decodedToken;
-  next()
+const createJWTMiddleware = ({UserModel}) => {
+
+  const jwtMiddleware= async (req,res,next) =>{
+    const decodedToken = getDecodedToken(req)
+    if (!decodedToken.id) {
+        return res.status(401).json({ error: 'token invalid' })
+    }
+    const user = await UserModel.findById({id:decodedToken.id})
+    req.user = user;
+    next()
+  }
+
+  return jwtMiddleware
 }
 
 module.exports = {
   requestLogger,
   unknownEndpoint,
   errorHandler,
-  jwtMiddleware
+  createJWTMiddleware
 }

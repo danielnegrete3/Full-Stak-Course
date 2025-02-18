@@ -38,12 +38,14 @@ const user = {
   password : "hel"
 }
 
-const users = [user,{
-  username: "usuario2",
-  name: "Daniel knit",
-  password : "holas"
-}]
+const otherUser = {
+  username: "alison",
+  name: "Daniel Aeres",
+  password : "hel"
+}
+
+const users = [user,otherUser]
 
 module.exports = {
-  initialblogs, nonExistingId, blogsInDb, newBlog, user,users
+  initialblogs, nonExistingId, blogsInDb, newBlog, user,users,otherUser
 }
