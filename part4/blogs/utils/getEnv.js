@@ -11,7 +11,8 @@ if(env === 'development'){
 const vars = {
     MONGODB_URI:process.env.MONGODB_URI,
     MONGODB_DB_NAME:process.env.MONGODB_DB_NAME,
-    PORT:process.env.PORT
+    PORT:process.env.PORT,
+    JWTSECRET: process.env.JWTSECRET
 }
 
 module.exports = vars

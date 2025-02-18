@@ -5,24 +5,45 @@ GET http://localhost:3001/api/blogs
 GET http://localhost:3001/api/blogs/67a19d0892422b1bbcbada66
 
 ### Delete un blog
-DELETE  http://localhost:3001/api/blogs/67a1a2cccfe5689f374a5e5e
+DELETE  http://localhost:3001/api/blogs/67a1a470cae65aadbf7be4a6
 
 ### Make a new  blog
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRlcmUiLCJpZCI6IjY3YjNlNGFkMDk4MDRiOGE3NzQzNDZlZCIsImlhdCI6MTczOTg0NDE1N30.Lt_TtD-Fh5NZOVCZi-i9wlQkR0fiWY5p0apP9DevIzI
 
 {
     "title": "New Blog",
-    "author": "Daniel Aer",
     "url" : "http/simon.com"
 }
 
 ### update a new  blog
 PUT http://localhost:3001/api/blogs/67a1a470cae65aadbf7be4a6
 Content-Type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRlcmUiLCJpZCI6IjY3YjNlNGFkMDk4MDRiOGE3NzQzNDZlZCIsImlhdCI6MTczOTg0NDE1N30.Lt_TtD-Fh5NZOVCZi-i9wlQkR0fiWY5p0apP9DevIzI
 
 {
     "title": "New Bloged",
-    "author": "Daniel Aeres",
-    "url" : "http/simon.com"
+    "url" : "http/simoesn.com"
+}
+### create an  user
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+    "username": "dere",
+    "name": "Daniel Aeres",
+    "password" : "hee"
+}
+
+### watch users 
+GET http://localhost:3001/api/users
+
+### login user
+POST http://localhost:3001/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "dere",
+    "password" : "hee"
 }

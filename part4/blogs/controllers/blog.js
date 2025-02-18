@@ -1,7 +1,9 @@
+const {getDecodedToken} = require('../utils/jwt')
 
 class BlogController{
-    constructor({BlogModel}){
+    constructor({BlogModel,UserModel}){
         this.BlogModel = BlogModel;
+        this.UserModel = UserModel;
         this.getAll = this.getAll.bind(this);
         this.create = this.create.bind(this);
         this.getById = this.getById.bind(this)
@@ -21,8 +23,22 @@ class BlogController{
     }
 
     async create(req, res){
+        const decodedToken = req.user
 
-        const newBlog = await this.BlogModel.create({input:req.body})
+        if (!decodedToken.id) {
+            return res.status(401).json({ error: 'token invalid' })
+        }
+
+        const user = await this.UserModel.findById({id:decodedToken.id})
+        const {body} = req
+        const bodyNewBlog = {
+            title : body.title,
+            author: user.name,
+            url: body.url,
+            user: user.id
+        }
+
+        const newBlog = await this.BlogModel.create({input:bodyNewBlog})
         if(newBlog === 400) res.status(400)
         res.status(201)
         res.json(newBlog)
@@ -30,13 +46,21 @@ class BlogController{
     }
 
     async update(req,res){
+        if (!decodedToken.id) {
+            return res.status(401).json({ error: 'token invalid' })
+        }
+
+        const user = await this.UserModel.findById({id:decodedToken.id})
+
         const body = req.body;
         const id = req.params.id;
+
+        const find
         const blog = {
             title: body.title,
-            author: body.author,
             url : body.url
         }
+
         const blogUpdated = await this.BlogModel.update({id,data:blog})
         res.json(blogUpdated)
     }
