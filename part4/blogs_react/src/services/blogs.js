@@ -6,52 +6,52 @@ const getAll = async () => {
   return request.data
 }
 
-const create = async ({title,url,author,token}) => {
+const create = async ({ title,url,author,token }) => {
   try{
-    const request = await axios.post(baseUrl, {title,url,author},
+    const request = await axios.post(baseUrl, { title,url,author },
       {
         headers: {
           Authorization: `Bearer ${token}`
-        } 
+        }
       }
     )
     return request.data
-    
+
   }catch(error){
-    return {error:error.response.data.error}
+    return { error:error.response.data.error }
   }
 }
 
-const update = async ({blog,id,token}) => {
+const update = async ({ blog,id,token }) => {
   try{
-    const request = await axios.put(`${baseUrl}/${id}`, {...blog},
+    const request = await axios.put(`${baseUrl}/${id}`, { ...blog },
       {
         headers: {
           Authorization: `Bearer ${token}`
-        } 
+        }
       }
     )
     return request.data
-    
+
   }catch(error){
-    return {error:error.response.data.error}
+    return { error:error.response.data.error }
   }
 }
 
-const drop = async ({id,token}) => {
+const drop = async ({ id,token }) => {
   try{
     const request = await axios.delete(`${baseUrl}/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`
-        } 
+        }
       }
     )
     return request.data
-    
+
   }catch(error){
-    return {error:error.response.data.error}
+    return { error:error.response.data.error }
   }
 }
 
-export default { getAll, create,update ,drop}
+export default { getAll, create,update ,drop }

@@ -11,22 +11,22 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [message, setMessage] = useState(null)
   const [showNewBlog, setShowNewBlog] = useState(false)
-  
+
   useEffect(() => {
-    blogService.getAll().then(blogs =>{
-        blogs.sort((a,b) => b.likes - a.likes)
-        setBlogs( blogs )
-      }
-    )  
+    blogService.getAll().then(blogs => {
+      blogs.sort((a,b) => b.likes - a.likes)
+      setBlogs( blogs )
+    }
+    )
   }, [])
 
-  useEffect(()=>{
+  useEffect(() => {
     if(user === null){
-        const loggedUserJSON = globalThis.localStorage.getItem('blogsUser')
-        if(loggedUserJSON){
-            const user = JSON.parse(loggedUserJSON)
-            setUser(user)
-        }
+      const loggedUserJSON = globalThis.localStorage.getItem('blogsUser')
+      if(loggedUserJSON){
+        const user = JSON.parse(loggedUserJSON)
+        setUser(user)
+      }
     }
 
   })
@@ -36,7 +36,7 @@ const App = () => {
     globalThis.localStorage.removeItem('blogsUser')
   }
 
-  const showMessage = ({message, messageType}) => {
+  const showMessage = ({ message, messageType }) => {
 
     const newMessage = {
       text:message,
@@ -49,7 +49,7 @@ const App = () => {
       setMessage(null)
     }, 5000)
   }
-  
+
 
   const changeNewBlog = (state) => {
     setShowNewBlog(state)
@@ -59,9 +59,9 @@ const App = () => {
     if(updateBlog.drop){
       const newBlogs = blogs.filter(blog => blog.id !== updateBlog.id)
       setBlogs(newBlogs)
-      return 
+      return
     }
-    
+
     const newBlogs = blogs.map(blog => blog.id === updateBlog.id ? updateBlog : blog)
     newBlogs.sort((a,b) => b.likes - a.likes)
     setBlogs(newBlogs)
@@ -73,18 +73,18 @@ const App = () => {
       <br />
       <BlogMessage message={message}/>
       { user === null ?
-          <Login setUser={setUser} showMessage={showMessage}/>:
-          <div>
-            <Loged user={user} handleLogout={handleLogout} showMessage={showMessage}/>
-            <br />
-            {showNewBlog? 
-              <NewBlog  user={user} blogs={blogs} setBlogs={setBlogs} showMessage={showMessage} cancelClick={() => changeNewBlog(false)}/>
-              :
-              <button onClick={() => changeNewBlog(true)}>Create a new Blog</button>
-            }
-            <br />
-            <AllBlogs blogs={blogs} showMessage={showMessage} user={user} changeBlogs={changeBlogs}/>
-          </div>
+        <Login setUser={setUser} showMessage={showMessage}/>:
+        <div>
+          <Loged user={user} handleLogout={handleLogout} showMessage={showMessage}/>
+          <br />
+          {showNewBlog?
+            <NewBlog  user={user} blogs={blogs} setBlogs={setBlogs} showMessage={showMessage} cancelClick={() => changeNewBlog(false)}/>
+            :
+            <button onClick={() => changeNewBlog(true)}>Create a new Blog</button>
+          }
+          <br />
+          <AllBlogs blogs={blogs} showMessage={showMessage} user={user} changeBlogs={changeBlogs}/>
+        </div>
       }
     </div>
   )

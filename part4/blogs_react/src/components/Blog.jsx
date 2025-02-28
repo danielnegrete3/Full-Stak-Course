@@ -1,7 +1,8 @@
-import { useState } from "react"
-import blogServices from "../services/blogs"
+import { useState } from 'react'
+import blogServices from '../services/blogs'
+import PropTypes from 'prop-types'
 
-const Blog = ({ blog, user, showMessage, changeBlogs}) => {
+const Blog = ({ blog, user, showMessage, changeBlogs }) => {
   const [showDetails, setShowDetails] = useState(false)
 
   const toggleShowDetails = () => setShowDetails(!showDetails)
@@ -15,14 +16,14 @@ const Blog = ({ blog, user, showMessage, changeBlogs}) => {
 
   const handleLike = async () => {
 
-      const newBlog = {...blog,likes:blog.likes+1}
+    const newBlog = { ...blog,likes:blog.likes+1 }
 
-      const response = await blogServices.update({blog:newBlog,id:blog.id,token:user.token})
-      if(response.error){
-          showMessage({message:response.error, messageType:'error'})
-          return
-      }
-      changeBlogs(response)
+    const response = await blogServices.update({ blog:newBlog,id:blog.id,token:user.token })
+    if(response.error){
+      showMessage({ message:response.error, messageType:'error' })
+      return
+    }
+    changeBlogs(response)
   }
 
   const handleDelete = async () => {
@@ -30,15 +31,15 @@ const Blog = ({ blog, user, showMessage, changeBlogs}) => {
 
     if(!res) return
 
-    const response = await blogServices.drop({id:blog.id,token:user.token})
+    const response = await blogServices.drop({ id:blog.id,token:user.token })
     if(response.error){
-        showMessage({message:response.error, messageType:'error'})
-        return
+      showMessage({ message:response.error, messageType:'error' })
+      return
     }
     response.drop = true
     changeBlogs(response)
   }
-    
+
   return(
     <div style={blogStyle}>
       <p>{blog.title}: {blog.author} <button onClick={toggleShowDetails}>{showDetails ? 'hide' : 'view'}</button></p>
@@ -54,8 +55,14 @@ const Blog = ({ blog, user, showMessage, changeBlogs}) => {
           }
         </>
       }
-    </div>  
+    </div>
   )
 }
 
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  showMessage: PropTypes.func.isRequired,
+  changeBlogs: PropTypes.func.isRequired
+}
 export default Blog
