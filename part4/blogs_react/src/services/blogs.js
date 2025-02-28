@@ -6,9 +6,9 @@ const getAll = async () => {
   return request.data
 }
 
-const create = async ({title,url,token}) => {
+const create = async ({title,url,author,token}) => {
   try{
-    const request = await axios.post(baseUrl, {title,url},
+    const request = await axios.post(baseUrl, {title,url,author},
       {
         headers: {
           Authorization: `Bearer ${token}`
@@ -38,4 +38,20 @@ const update = async ({blog,id,token}) => {
   }
 }
 
-export default { getAll, create,update}
+const drop = async ({id,token}) => {
+  try{
+    const request = await axios.delete(`${baseUrl}/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        } 
+      }
+    )
+    return request.data
+    
+  }catch(error){
+    return {error:error.response.data.error}
+  }
+}
+
+export default { getAll, create,update ,drop}

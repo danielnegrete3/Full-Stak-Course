@@ -25,12 +25,11 @@ class BlogModel {
       //  save in user
       user.blogs.push(newBlog.id)
       await user.save()
-      console.log(newBlog)
-      return newBlog.save()
+      return (await newBlog.save()).populate('user')
   }
 
-  static async update({data,id,user}){
-    return await Blog.findOneAndUpdate({_id:id,user:user.id},data,{ new: true,runValidators: true, context: 'query' }).populate('user')
+  static async update({data,id}){
+    return await Blog.findOneAndUpdate({_id:id},data,{ new: true,runValidators: true, context: 'query' }).populate('user')
   }
 
   static async delete({id,user}){

@@ -24,18 +24,36 @@ const Blog = ({ blog, user, showMessage, changeBlogs}) => {
       }
       changeBlogs(response)
   }
+
+  const handleDelete = async () => {
+    const res = window.confirm(`Delete ${blog.title} by ${blog.author}`)
+
+    if(!res) return
+
+    const response = await blogServices.drop({id:blog.id,token:user.token})
+    if(response.error){
+        showMessage({message:response.error, messageType:'error'})
+        return
+    }
+    response.drop = true
+    changeBlogs(response)
+  }
     
   return(
     <div style={blogStyle}>
-      <p>{blog.title} <button onClick={toggleShowDetails}>{showDetails ? 'hide' : 'view'}</button></p>
+      <p>{blog.title}: {blog.author} <button onClick={toggleShowDetails}>{showDetails ? 'hide' : 'view'}</button></p>
       {showDetails &&
         <>
           <p>{blog.url}</p>
           <p>{blog.likes} <button onClick={handleLike}>like</button></p>
-          <p>{blog.author}</p>
+          <p>{user.name}</p>
+          <br />
+          {
+            user.username === blog.user.username &&
+            <button onClick={handleDelete}>delete</button>
+          }
         </>
       }
-      
     </div>  
   )
 }

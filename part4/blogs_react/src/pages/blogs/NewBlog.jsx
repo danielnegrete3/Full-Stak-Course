@@ -4,12 +4,14 @@ import blogServices from '../../services/blogs'
 const NewBlog = ({user,blogs,setBlogs,showMessage,cancelClick=()=>{}}) => {
     const [title, setTitle] = useState('')
     const [url, setUrl] = useState('')
+    const [author, setAuthor] = useState('')
 
     const handleSubmit = async (event) => {
         event.preventDefault()
         const blog = {
             title,
-            url
+            url,
+            author
         }
 
         const response = await blogServices.create({...blog,token:user.token})
@@ -23,11 +25,13 @@ const NewBlog = ({user,blogs,setBlogs,showMessage,cancelClick=()=>{}}) => {
 
         clearForm()
         showMessage({message:`New Blog created ${response.title}`, messageType:'success'})
+        cancelClick()
     }
 
     const clearForm = () => {
         setTitle('')
         setUrl('')
+        setAuthor('')
     }
 
     return (
@@ -50,6 +54,15 @@ const NewBlog = ({user,blogs,setBlogs,showMessage,cancelClick=()=>{}}) => {
                         name="url"
                         value={url}
                         onChange={({target}) => setUrl(target.value)}
+                    />
+                </div>
+                <div>
+                    author
+                    <input
+                        type="text"
+                        name="url"
+                        value={author}
+                        onChange={({target}) => setAuthor(target.value)}
                     />
                 </div>
                 <button type="submit">Create</button>

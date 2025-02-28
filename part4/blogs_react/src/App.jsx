@@ -13,8 +13,10 @@ const App = () => {
   const [showNewBlog, setShowNewBlog] = useState(false)
   
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
+    blogService.getAll().then(blogs =>{
+        blogs.sort((a,b) => b.likes - a.likes)
+        setBlogs( blogs )
+      }
     )  
   }, [])
 
@@ -54,7 +56,14 @@ const App = () => {
   }
 
   const changeBlogs = (updateBlog) => {
+    if(updateBlog.drop){
+      const newBlogs = blogs.filter(blog => blog.id !== updateBlog.id)
+      setBlogs(newBlogs)
+      return 
+    }
+    
     const newBlogs = blogs.map(blog => blog.id === updateBlog.id ? updateBlog : blog)
+    newBlogs.sort((a,b) => b.likes - a.likes)
     setBlogs(newBlogs)
   }
 

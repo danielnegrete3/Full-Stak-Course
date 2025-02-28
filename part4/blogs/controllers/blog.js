@@ -29,7 +29,7 @@ class BlogController{
         const {body} = req
         const bodyNewBlog = {
             title : body.title,
-            author: user.name,
+            author: body.author,
             url: body.url,
             user: user.id
         }
@@ -48,9 +48,16 @@ class BlogController{
         const body = req.body;
         const id = req.params.id;
 
-        const blog = {
+        if(user.blogs.indexOf(id) === -1){}
+        const blog = user.blogs.indexOf(id) === -1?
+        {
+            likes: body.likes
+        }
+        :
+        {
             title: body.title,
             url : body.url,
+            author : body.author,
             likes: body.likes
         }
 
