@@ -50,7 +50,8 @@ class BlogController{
 
         const blog = {
             title: body.title,
-            url : body.url
+            url : body.url,
+            likes: body.likes
         }
 
         const blogUpdated = await this.BlogModel.update({id,data:blog,user})

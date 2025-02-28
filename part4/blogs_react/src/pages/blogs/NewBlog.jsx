@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import blogServices from '../../services/blogs'
 
-const NewBlog = ({user,blogs,setBlogs,showMessage}) => {
+const NewBlog = ({user,blogs,setBlogs,showMessage,cancelClick=()=>{}}) => {
     const [title, setTitle] = useState('')
     const [url, setUrl] = useState('')
 
@@ -52,8 +52,9 @@ const NewBlog = ({user,blogs,setBlogs,showMessage}) => {
                         onChange={({target}) => setUrl(target.value)}
                     />
                 </div>
-                <button type="submit">create</button>
+                <button type="submit">Create</button>
             </form>
+            <button onClick={cancelClick}>Cancel</button>
         </div>
     )
 }

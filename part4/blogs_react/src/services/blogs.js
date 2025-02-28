@@ -22,4 +22,20 @@ const create = async ({title,url,token}) => {
   }
 }
 
-export default { getAll, create}
+const update = async ({blog,id,token}) => {
+  try{
+    const request = await axios.put(`${baseUrl}/${id}`, {...blog},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        } 
+      }
+    )
+    return request.data
+    
+  }catch(error){
+    return {error:error.response.data.error}
+  }
+}
+
+export default { getAll, create,update}

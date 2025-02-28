@@ -10,6 +10,7 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
   const [message, setMessage] = useState(null)
+  const [showNewBlog, setShowNewBlog] = useState(false)
   
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -48,6 +49,15 @@ const App = () => {
   }
   
 
+  const changeNewBlog = (state) => {
+    setShowNewBlog(state)
+  }
+
+  const changeBlogs = (updateBlog) => {
+    const newBlogs = blogs.map(blog => blog.id === updateBlog.id ? updateBlog : blog)
+    setBlogs(newBlogs)
+  }
+
   return (
     <div>
       <h2>blogs</h2>
@@ -58,9 +68,13 @@ const App = () => {
           <div>
             <Loged user={user} handleLogout={handleLogout} showMessage={showMessage}/>
             <br />
-            <NewBlog  user={user} blogs={blogs} setBlogs={setBlogs} showMessage={showMessage}/>
+            {showNewBlog? 
+              <NewBlog  user={user} blogs={blogs} setBlogs={setBlogs} showMessage={showMessage} cancelClick={() => changeNewBlog(false)}/>
+              :
+              <button onClick={() => changeNewBlog(true)}>Create a new Blog</button>
+            }
             <br />
-            <AllBlogs blogs={blogs} showMessage={showMessage}/>
+            <AllBlogs blogs={blogs} showMessage={showMessage} user={user} changeBlogs={changeBlogs}/>
           </div>
       }
     </div>
