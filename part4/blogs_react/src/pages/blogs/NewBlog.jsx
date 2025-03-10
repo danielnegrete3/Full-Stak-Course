@@ -2,7 +2,7 @@ import { useState } from 'react'
 import blogServices from '../../services/blogs'
 import PropTypes from 'prop-types'
 
-const NewBlog = ({ user,blogs,setBlogs,showMessage,cancelClick=() => {} }) => {
+const NewBlog = ({ user,insertNewBlog,showMessage,cancelClick=() => {}, test=false }) => {
   const [title, setTitle] = useState('')
   const [url, setUrl] = useState('')
   const [author, setAuthor] = useState('')
@@ -15,14 +15,18 @@ const NewBlog = ({ user,blogs,setBlogs,showMessage,cancelClick=() => {} }) => {
       author
     }
 
+    if(test){
+      insertNewBlog(blog)
+      return
+    }
+
     const response = await blogServices.create({ ...blog,token:user.token })
     if(response.error){
       showMessage({ message:response.error, messageType:'error' })
       return
     }
 
-    const newBlogs = blogs.concat(response)
-    setBlogs(newBlogs)
+    insertNewBlog(response)
 
     clearForm()
     showMessage({ message:`New Blog created ${response.title}`, messageType:'success' })
@@ -45,6 +49,7 @@ const NewBlog = ({ user,blogs,setBlogs,showMessage,cancelClick=() => {} }) => {
             type="text"
             name="title"
             value={title}
+            placeholder='title'
             onChange={({ target }) => setTitle(target.value)}
           />
         </div>
@@ -54,6 +59,7 @@ const NewBlog = ({ user,blogs,setBlogs,showMessage,cancelClick=() => {} }) => {
             type="text"
             name="url"
             value={url}
+            placeholder='url'
             onChange={({ target }) => setUrl(target.value)}
           />
         </div>
@@ -61,8 +67,9 @@ const NewBlog = ({ user,blogs,setBlogs,showMessage,cancelClick=() => {} }) => {
                     author
           <input
             type="text"
-            name="url"
+            name="author"
             value={author}
+            placeholder='author'
             onChange={({ target }) => setAuthor(target.value)}
           />
         </div>
@@ -75,8 +82,7 @@ const NewBlog = ({ user,blogs,setBlogs,showMessage,cancelClick=() => {} }) => {
 
 NewBlog.propTypes = {
   user: PropTypes.object.isRequired,
-  blogs: PropTypes.array.isRequired,
-  setBlogs: PropTypes.func.isRequired,
+  insertNewBlog: PropTypes.func.isRequired,
   showMessage: PropTypes.func.isRequired,
   cancelClick: PropTypes.func
 }

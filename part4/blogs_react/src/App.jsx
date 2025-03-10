@@ -67,6 +67,11 @@ const App = () => {
     setBlogs(newBlogs)
   }
 
+  const insertNewBlog = (newBlog) => {
+    const newBlogs = blogs.concat(newBlog)
+    setBlogs(newBlogs)
+  }
+
   return (
     <div>
       <h2>blogs</h2>
@@ -78,7 +83,7 @@ const App = () => {
           <Loged user={user} handleLogout={handleLogout} showMessage={showMessage}/>
           <br />
           {showNewBlog?
-            <NewBlog  user={user} blogs={blogs} setBlogs={setBlogs} showMessage={showMessage} cancelClick={() => changeNewBlog(false)}/>
+            <NewBlog  user={user} insertNewBlog={insertNewBlog} showMessage={showMessage} cancelClick={() => changeNewBlog(false)}/>
             :
             <button onClick={() => changeNewBlog(true)}>Create a new Blog</button>
           }

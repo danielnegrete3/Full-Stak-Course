@@ -2,7 +2,7 @@ import { useState } from 'react'
 import blogServices from '../services/blogs'
 import PropTypes from 'prop-types'
 
-const Blog = ({ blog, user, showMessage, changeBlogs }) => {
+const Blog = ({ blog, user, showMessage, changeBlogs, test=false }) => {
   const [showDetails, setShowDetails] = useState(false)
 
   const toggleShowDetails = () => setShowDetails(!showDetails)
@@ -15,6 +15,11 @@ const Blog = ({ blog, user, showMessage, changeBlogs }) => {
   }
 
   const handleLike = async () => {
+
+    if(test){
+      test()
+      return
+    }
 
     const newBlog = { ...blog,likes:blog.likes+1 }
 
