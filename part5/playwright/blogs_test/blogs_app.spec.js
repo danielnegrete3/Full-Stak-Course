@@ -87,15 +87,18 @@ describe('Blogs App',()=>{
                 await page.getByRole('button', { name: 'view' }).last().click()
 
                 const lastBlog = page.getByRole('button', { name: 'like' })
-                const lastText = lastBlog.locator('..').textContent()
+                const container = page.getByRole('button', { name: 'like' }).locator('..')
+                const initialBox  = await container.boundingBox()
+
 
                 await lastBlog.click()
 
-                const firstBlog = page.getByRole('button', { name: 'like' })
-                const firstText = firstBlog.locator('..').textContent()
-                console.log(lastText,firstText)
+                await page.waitForTimeout(500)
 
-                await page.getByRole('button', { name: 'hide' }).click()
+                const newBox = await container.boundingBox()
+
+                console.log(`initialBox: ${JSON.stringify(initialBox)} y newBox: ${JSON.stringify(newBox)}`)
+                expect(newBox).not.toEqual(initialBox)
 
             })
         })
