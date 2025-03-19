@@ -46,6 +46,10 @@ class BlogModel {
     return blogDeleted
   }
 
+  static async deleteAll(){
+    await Blog.deleteMany({})
+  }
+
 }
 
 module.exports = {BlogModel,Blog}

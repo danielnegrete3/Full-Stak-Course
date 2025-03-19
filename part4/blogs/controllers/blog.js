@@ -48,7 +48,6 @@ class BlogController{
         const body = req.body;
         const id = req.params.id;
 
-        if(user.blogs.indexOf(id) === -1){}
         const blog = user.blogs.indexOf(id) === -1?
         {
             likes: body.likes

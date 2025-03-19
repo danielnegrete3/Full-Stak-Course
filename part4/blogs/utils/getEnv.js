@@ -12,7 +12,8 @@ const vars = {
     MONGODB_URI:process.env.MONGODB_URI,
     MONGODB_DB_NAME:process.env.MONGODB_DB_NAME,
     PORT:process.env.PORT,
-    JWTSECRET: process.env.JWTSECRET
+    JWTSECRET: process.env.JWTSECRET,
+    NODE_ENV: process.env.NODE_ENV
 }
 
 module.exports = vars

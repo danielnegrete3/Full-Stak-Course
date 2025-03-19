@@ -39,6 +39,10 @@ class UserModel {
       static async delete({id}){
         return await User.findByIdAndDelete(id)
       }
+
+      static async deleteAll(){
+        await User.deleteMany({})
+      }
 }
 
 module.exports = {UserModel,User}

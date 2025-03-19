@@ -25,6 +25,7 @@ const Login = ({ setUser,showMessage }) => {
           <input
             type="text"
             name="username"
+            data-testid='username'
           />
         </div>
         <div>
@@ -32,6 +33,7 @@ const Login = ({ setUser,showMessage }) => {
           <input
             type="password"
             name="password"
+            data-testid='password'
           />
         </div>
         <button type="submit">login</button>
