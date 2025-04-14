@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { voteAnecdote } from "../reducers/anecdoteReducer"
+import { sentMessage } from "../reducers/messageReducer"
 
 
 const AnecdoteList = () => {
@@ -9,7 +10,7 @@ const AnecdoteList = () => {
         if(filter === ""){
             return anecdotes
         }
-        
+
         return anecdotes.filter((anecdote) => {
             return new RegExp(`${filter}`, "i").test(anecdote.content)
         })
@@ -18,6 +19,8 @@ const AnecdoteList = () => {
 
     const vote = (id) => {
         dispatch(voteAnecdote({id}))
+        const anecdote = anecdotes.find((value) => value.id === id)
+        dispatch(sentMessage({content:`You voted : '${anecdote.content}'`}))
     }
 
     return(

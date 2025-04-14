@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux"
 import { createAnecdote } from "../reducers/anecdoteReducer"
+import { sentMessage } from "../reducers/messageReducer"
 
 
 const AnecdoteForm = () => {
@@ -8,8 +9,9 @@ const AnecdoteForm = () => {
 
     const submit = (e) =>{
         e.preventDefault()
-
-        dispatch(createAnecdote({content:e.target.anecdote.value}))
+        const content = e.target.anecdote.value
+        dispatch(createAnecdote({content}))
+        dispatch(sentMessage({content:`You created : '${content}'`}))
         e.target.anecdote.value = ""
     }
     return(
