@@ -4,7 +4,16 @@ import { voteAnecdote } from "../reducers/anecdoteReducer"
 
 const AnecdoteList = () => {
 
-    const anecdotes = useSelector(state => state)
+    const anecdotes = useSelector(state => {
+        const {filter,anecdotes} = state
+        if(filter === ""){
+            return anecdotes
+        }
+        
+        return anecdotes.filter((anecdote) => {
+            return new RegExp(`${filter}`, "i").test(anecdote.content)
+        })
+    })
     const dispatch = useDispatch()
 
     const vote = (id) => {
