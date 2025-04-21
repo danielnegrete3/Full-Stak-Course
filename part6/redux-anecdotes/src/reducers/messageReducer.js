@@ -23,3 +23,13 @@ const messageSlice = createSlice({
 
 export default messageSlice.reducer
 export const {sentMessage,setShow} = messageSlice.actions
+
+export const showMessage = ({content,time=5000}) => {
+  return async dispatch => {
+    
+    dispatch(sentMessage({content}))
+    setTimeout(() => {
+        dispatch(setShow({show:false}))
+    }, time);
+  }
+}

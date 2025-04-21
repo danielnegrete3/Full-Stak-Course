@@ -9,8 +9,12 @@ export const getAll = async () => {
 
 export const createNew = async (content) => {
     const object = { content, votes: 0 }
-    console.log(object)
     const response = await axios.post(baseUrl, object)
+    return response.data
+}
+
+export const updated = async (object) => {
+    const response = await axios.put(`${baseUrl}/${object.id}`, object)
     return response.data
 }
 

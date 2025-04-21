@@ -1,7 +1,6 @@
 import { useDispatch } from "react-redux"
-import { createAnecdote } from "../reducers/anecdoteReducer"
-import { sentMessage } from "../reducers/messageReducer"
-import { createNew } from "../services/anecdote"
+import { appendAnecdote } from "../reducers/anecdoteReducer"
+import { showMessage } from "../reducers/messageReducer"
 
 
 const AnecdoteForm = () => {
@@ -11,10 +10,9 @@ const AnecdoteForm = () => {
     const submit = async (e) =>{
         e.preventDefault()
         const content = e.target.anecdote.value
-        const anecdote = await createNew(content)
-        console.log(anecdote)
-        dispatch(createAnecdote({anecdote}))
-        dispatch(sentMessage({content:`You created : '${anecdote.content}'`}))
+
+        dispatch(appendAnecdote(content))
+        dispatch(showMessage({content:`You created : '${content}'`}))
         e.target.anecdote.value = ""
     }
     return(

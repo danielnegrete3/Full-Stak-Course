@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
-import { setAnecdotes, voteAnecdote } from "../reducers/anecdoteReducer"
-import { sentMessage } from "../reducers/messageReducer"
+import { addVote, initializeAnecdotes } from "../reducers/anecdoteReducer"
+import { showMessage } from "../reducers/messageReducer"
 import { useEffect } from "react"
-import { getAll } from "../services/anecdote"
 
 
 const AnecdoteList = () => {
@@ -19,15 +18,14 @@ const AnecdoteList = () => {
     })
 
     useEffect(() => {
-        getAll().then(anecdotes => dispatch(setAnecdotes({anecdotes})))
-      })
+        dispatch(initializeAnecdotes())
+      },[])
 
     const dispatch = useDispatch()
 
-    const vote = (id) => {
-        dispatch(voteAnecdote({id}))
-        const anecdote = anecdotes.find((value) => value.id === id)
-        dispatch(sentMessage({content:`You voted : '${anecdote.content}'`}))
+    const vote = (anecdote) => {
+        dispatch(addVote(anecdote))
+        dispatch(showMessage({content:`You voted : '${anecdote.content}'`}))
     }
 
     return(
@@ -39,7 +37,7 @@ const AnecdoteList = () => {
                     </div>
                     <div>
                         has {anecdote.votes}
-                        <button onClick={() => vote(anecdote.id)}>vote</button>
+                        <button onClick={() => vote(anecdote)}>vote</button>
                     </div>
                 </div>
             )}
