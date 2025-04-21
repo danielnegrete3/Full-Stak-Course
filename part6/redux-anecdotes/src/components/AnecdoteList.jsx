@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from "react-redux"
-import { voteAnecdote } from "../reducers/anecdoteReducer"
+import { setAnecdotes, voteAnecdote } from "../reducers/anecdoteReducer"
 import { sentMessage } from "../reducers/messageReducer"
+import { useEffect } from "react"
+import { getAll } from "../services/anecdote"
 
 
 const AnecdoteList = () => {
@@ -15,6 +17,11 @@ const AnecdoteList = () => {
             return new RegExp(`${filter}`, "i").test(anecdote.content)
         })
     })
+
+    useEffect(() => {
+        getAll().then(anecdotes => dispatch(setAnecdotes({anecdotes})))
+      })
+
     const dispatch = useDispatch()
 
     const vote = (id) => {
@@ -27,13 +34,13 @@ const AnecdoteList = () => {
         <>
             {anecdotes.map(anecdote =>
                 <div key={anecdote.id}>
-                <div>
-                    {anecdote.content}
-                </div>
-                <div>
-                    has {anecdote.votes}
-                    <button onClick={() => vote(anecdote.id)}>vote</button>
-                </div>
+                    <div>
+                        {anecdote.content}
+                    </div>
+                    <div>
+                        has {anecdote.votes}
+                        <button onClick={() => vote(anecdote.id)}>vote</button>
+                    </div>
                 </div>
             )}
         </>
