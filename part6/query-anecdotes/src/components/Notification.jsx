@@ -1,4 +1,7 @@
+import useMessage from "../hooks/useMessage"
+
 const Notification = () => {
+  const {state} = useMessage()
   const style = {
     border: 'solid',
     padding: 10,
@@ -6,11 +9,11 @@ const Notification = () => {
     marginBottom: 5
   }
   
-  if (true) return null
+  if (!state.show) return null
 
   return (
     <div style={style}>
-      
+      {state.message}
     </div>
   )
 }

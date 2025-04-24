@@ -2,12 +2,14 @@ import { createNew, getAll, updated } from "../services/anecdotes"
 
 
 const key = 'anecdotes'
-export const CreateNewAnecdoteMutation = (queryClient) => {
+export const CreateNewAnecdoteMutation = ({queryClient, onError = () => {},onSuccess = () => {}}) => {
     return {
         mutationFn: createNew,
-        onSuccess: () => {
+        onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: [key] })
-        }
+            onSuccess(data)
+        },
+        onError
     }
 }
 
