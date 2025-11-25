@@ -1,3 +1,4 @@
+import { MessageLayout } from "../layouts/MessageLayout";
 import { AuthRouter } from "./auth";
 
 export const MapRouters = [
@@ -5,6 +6,7 @@ export const MapRouters = [
 
     {
         path:'',
+        Component:MessageLayout,
         children:[
             ...AuthRouter,    
 

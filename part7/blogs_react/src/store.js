@@ -1,8 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
-import blogReducer from './features/blogs/blogSlice'
+import blog from './features/blogs/blogSlice'
+import auth from './features/auth/authSlice'
+import message from './features/messages/messageSlice'
 
 export default configureStore({
   reducer: {
-    blog: blogReducer,
+    blog,
+    auth,
+    message
   },
 })

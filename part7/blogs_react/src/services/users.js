@@ -13,7 +13,6 @@ export const get = async () => {
 }
 
 export const post = async ({body}) => {
-  console.log('url',url)
   try{
     const response = await axios.post(`${url}`,body)
     return response

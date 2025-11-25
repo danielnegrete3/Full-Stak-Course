@@ -1,11 +1,16 @@
 import { useRef } from "react"
 import { post } from "../../services/users"
+import { NavLink, useNavigate } from "react-router"
+import { useDispatch } from "react-redux"
+import { insertMessage } from "../../features/messages/messageSlice"
 
 export const Register = () => {
     const username = useRef('')
     const name = useRef('')
     const password = useRef('')
     const confPassword = useRef('')
+    const dispatch = useDispatch()
+    const navigate = useNavigate();
 
     const handleSubmit = async (event)=> {
         event.preventDefault()
@@ -17,7 +22,14 @@ export const Register = () => {
             name:name.current.value,
             password:password.current.value,
         }
-        const response = await post({body})
+        const result = await post({body})
+        if(result.error){
+            console.log('entro aca ')
+            dispatch(insertMessage({ item:{message:result.error, messageType:'error' }}))
+            return
+        }
+
+        navigate('/login')
     }
 
     return(
@@ -41,6 +53,8 @@ export const Register = () => {
                     <input name="confPassword" ref={confPassword}/>
                 </div>                
 
+                <NavLink to={{pathname:"/login"}}>sing in</NavLink>
+                <br />
                 <button type="submit">sign up</button>
             </form>
         </div>

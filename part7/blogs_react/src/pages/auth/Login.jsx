@@ -1,18 +1,26 @@
 import PropTypes from 'prop-types'
 import { login } from '../../services/auth'
+import { useDispatch } from "react-redux"
+import { NavLink } from 'react-router'
+import { insertMessage } from '../../features/messages/messageSlice'
+import { setAuthUser } from '../../features/auth/authSlice'
 
-const Login = ({ setUser,showMessage }) => {
+const Login = () => {
+  const dispatch = useDispatch()
 
   const handleLogin = async (event) => {
     event.preventDefault()
     const result = await login({ username:event.target.username.value, password:event.target.password.value })
 
     if(result.error){
-      showMessage({ message:result.error, messageType:'error' })
+      dispatch(insertMessage({ item:{message:result.error, messageType:'error' }}))
       return
     }
-    showMessage({ message:'Loged Correctly', messageType:'success' })
-    setUser(result)
+    
+    dispatch(insertMessage({ item:{message:'Loged Correctly', messageType:'success'} }))
+
+    dispatch(setAuthUser({user:result}))
+
     globalThis.localStorage.setItem('blogsUser', JSON.stringify(result))
   }
 
@@ -36,6 +44,8 @@ const Login = ({ setUser,showMessage }) => {
             data-testid='password'
           />
         </div>
+        <NavLink to={{pathname:"/registrations"}}>Sing up</NavLink>
+        <br />
         <button type="submit">login</button>
       </form>
     </div>
@@ -43,7 +53,7 @@ const Login = ({ setUser,showMessage }) => {
 }
 
 Login.propTypes = {
-  setUser: PropTypes.func.isRequired,
-  showMessage: PropTypes.func.isRequired
+  // setUser: PropTypes.func.isRequired,
+  // showMessage: PropTypes.func.isRequired
 }
 export default Login

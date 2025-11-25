@@ -1,15 +1,17 @@
 import Login from "../pages/auth/Login";
 import { Register } from "../pages/auth/Register";
+import { IsLoggedMiddleware } from "./middlewares/IsLoggedMiddleware";
 
 export const AuthRouter = [
     {
-        path:'/login',
+        path:'login',
         Component: Login,
-        // errorElement:()=><div>Error</div>
     },
     {
-        path:'/registrations',
+        path:'registrations',
         Component: Register,
+        // middleware:[IsLoggedMiddleware],
+
     },
     
 ]
