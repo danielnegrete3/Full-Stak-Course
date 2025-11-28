@@ -1,11 +1,22 @@
 import { useState } from 'react'
 import blogServices from '../../services/blogs'
-import PropTypes from 'prop-types'
+import { insertBlog } from '../../features/blogs/blogSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router'
+import { insertMessage } from '../../features/messages/messageSlice'
 
-const NewBlog = ({ user,insertNewBlog,showMessage,cancelClick=() => {}, test=false }) => {
+export const NewBlog = ({}) => {
   const [title, setTitle] = useState('')
   const [url, setUrl] = useState('')
   const [author, setAuthor] = useState('')
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const user = useSelector((state) => state.auth.user)
+
+
+  const cancelClick = () => {
+    navigate('blogs/all')
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -15,22 +26,16 @@ const NewBlog = ({ user,insertNewBlog,showMessage,cancelClick=() => {}, test=fal
       author
     }
 
-    if(test){
-      insertNewBlog(blog)
-      return
-    }
-
     const response = await blogServices.create({ ...blog,token:user.token })
     if(response.error){
-      showMessage({ message:response.error, messageType:'error' })
+      dispatch(insertMessage({item:{ message:response.error, messageType:'error' }}))
       return
     }
 
-    insertNewBlog(response)
+    dispatch(insertBlog({item:response}))
 
     clearForm()
-    showMessage({ message:`New Blog created ${response.title}`, messageType:'success' })
-    cancelClick()
+    dispatch(insertMessage({item:{message:`New Blog created ${response.title}`, messageType:'success'}}))
   }
 
   const clearForm = () => {
@@ -79,12 +84,3 @@ const NewBlog = ({ user,insertNewBlog,showMessage,cancelClick=() => {}, test=fal
     </div>
   )
 }
-
-NewBlog.propTypes = {
-  user: PropTypes.object.isRequired,
-  insertNewBlog: PropTypes.func.isRequired,
-  showMessage: PropTypes.func.isRequired,
-  cancelClick: PropTypes.func
-}
-
-export default NewBlog

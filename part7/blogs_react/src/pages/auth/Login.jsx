@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types'
 import { login } from '../../services/auth'
 import { useDispatch } from "react-redux"
-import { NavLink } from 'react-router'
+import { NavLink, useNavigate } from 'react-router'
 import { insertMessage } from '../../features/messages/messageSlice'
 import { setAuthUser } from '../../features/auth/authSlice'
 
 const Login = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate();
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -22,6 +23,8 @@ const Login = () => {
     dispatch(setAuthUser({user:result}))
 
     globalThis.localStorage.setItem('blogsUser', JSON.stringify(result))
+
+    navigate('/blogs/all')
   }
 
   return(

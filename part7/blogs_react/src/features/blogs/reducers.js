@@ -1,20 +1,49 @@
 export const insert = (state,action) =>  {
-    state.array.push(action.payload.item)
+    return {
+        ...state,
+        array:[...state.array,action.payload.item]
+    }
 }
 
 export const update = (state,action) => {
-    state.array = state.array.map((item) => {
-        if(state.current === item.id)
-            return action.item
+    let newArray = state.array.map((item) => {
+        if(item.id === action.payload.item.id)
+            return action.payload.item
         return item
     })
+    newArray.sort((a,b) => b.likes - a.likes)
+    return {
+        ...state,
+        array:newArray
+    }
+}
+
+export const drop = (state,action) => {
+    let newArray = state.array.filter((item) => 
+        item.id !== action.payload.item.id
+    )
+    
+    newArray.sort((a,b) => b.likes - a.likes)
+    return {
+        ...state,
+        array:newArray
+    }
 }
 
 export const get = (state,action) => {
-    if(action.id) return state.array[action.id]
+    if(action.payload.id) return state.array[action.payload.id]
     return state.array
 }
 
 export const getCurrent = (state) => {
     return state.array[state.current]
+}
+
+export const  charge = (state,action) => {
+    let newArray = action.payload.array
+    newArray.sort((a,b) => b.likes - a.likes)
+    return {
+        ...state,
+        array:newArray
+    }
 }

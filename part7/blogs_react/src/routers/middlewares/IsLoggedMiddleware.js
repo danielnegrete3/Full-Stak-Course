@@ -1,5 +1,7 @@
+import store from '../../store'
 
-export async function IsLoggedMiddleware({ request },next) {
-  console.log('🔵 Middleware ejecutado para:', request.url);
-  return await next()
+export async function IsLoggedMiddleware() {
+  const user = JSON.parse(globalThis.localStorage.getItem('blogsUser'))
+  if(store.getState().auth.user) return
+  store.dispatch({type:'auth/setAuthUser',payload:{user}})
 }

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import blogServices from '../services/blogs'
 import PropTypes from 'prop-types'
 
-const Blog = ({ blog, user, showMessage, changeBlogs, test=false }) => {
+const Blog = ({ blog, user, showMessage, changeBlogs,deleteBlog, test=false }) => {
   const [showDetails, setShowDetails] = useState(false)
 
   const toggleShowDetails = () => setShowDetails(!showDetails)
@@ -42,7 +42,7 @@ const Blog = ({ blog, user, showMessage, changeBlogs, test=false }) => {
       return
     }
     response.drop = true
-    changeBlogs(response)
+    deleteBlog(blog)
   }
 
   return(
