@@ -20,6 +20,5 @@ export const BlogsRouter = [
                 Component: NewBlog,        
             },
         ]
-    },
-    
+    },    
 ]

@@ -11,6 +11,10 @@ export const AuthRouter = [
                 Component: Login,
             },
             {
+                path:'',
+                Component: Login,
+            },
+            {
                 path:'registrations',
                 Component: Register,        
             },

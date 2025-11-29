@@ -15,12 +15,14 @@ export const BlogsLayout = () => {
 
     return(
         <div>
+            <h1>Blogs App</h1>
             <aside>
                 {user.name} logged in <button onClick={handleLogout}>logout</button>
             </aside>
-            <div style={{gap:'5px',display:'flex'}}>
+            <div style={{gap:'10px',display:'flex'}}>
                 <NavLink to={'/blogs/create'} >Nuevo Blog</NavLink>
-                <NavLink to={'/blogs/all'}>Blogs</NavLink>
+                <NavLink to={'/blogs/all'}>All Blogs</NavLink>
+                <NavLink to={'/users/all'}>All Users</NavLink>
             </div>
             <Outlet/>
         </div>
