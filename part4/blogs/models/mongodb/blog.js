@@ -11,12 +11,12 @@ class BlogModel {
 
   static async getAll()
   {
-    return Blog.find({}).populate('user')
+    return Blog.find({}).populate('user').populate('comments')
   }
 
   static async findById({id,user})
   {
-    return Blog.find({_id: id}).populate('user')
+    return Blog.find({_id: id}).populate('user').populate('comments')
   }
 
   static async create({input, user}){
@@ -25,11 +25,11 @@ class BlogModel {
       //  save in user
       user.blogs.push(newBlog.id)
       await user.save()
-      return (await newBlog.save()).populate('user')
+      return (await newBlog.save()).populate('user').populate('comments')
   }
 
   static async update({data,id}){
-    return await Blog.findOneAndUpdate({_id:id},data,{ new: true,runValidators: true, context: 'query' }).populate('user')
+    return await Blog.findOneAndUpdate({_id:id},data,{ new: true,runValidators: true, context: 'query' }).populate('user').populate('comments')
   }
 
   static async delete({id,user}){

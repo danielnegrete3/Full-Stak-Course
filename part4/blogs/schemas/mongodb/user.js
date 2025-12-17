@@ -15,6 +15,12 @@ const userSchema = {
         ref: 'Blog'
       }
     ],
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment'
+      }
+    ],
   }
 
   const createUserSchema = () => {

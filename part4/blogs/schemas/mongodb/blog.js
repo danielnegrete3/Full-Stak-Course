@@ -20,7 +20,13 @@ const blogSchema = {
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
-  }
+  },
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comment'
+    }
+  ],
 }
 
 const createBlogSchema = () => {

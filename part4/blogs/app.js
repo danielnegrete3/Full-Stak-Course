@@ -10,6 +10,7 @@ const {UserModel} = require('./models/mongodb/user')
 const {createAuthRouter} = require('./routers/auth')
 const {NODE_ENV} = require('./utils/getEnv')
 const { createTestRouter } = require('./routers/test')
+const { createCommentRouter } = require('./routers/comment')
 app.use(cors())
 app.use(express.json())
 
@@ -17,6 +18,7 @@ app.use(express.json())
 app.use('/api/blogs', createBlogRouter({BlogModel,UserModel}))
 app.use('/api/users', createUserRouter({UserModel}))
 app.use('/api/auth', createAuthRouter({UserModel}))
+app.use('/api/comments', createCommentRouter({BlogModel,UserModel}))
 
 if(NODE_ENV === 'test'){
     app.use('/api/test',createTestRouter({BlogModel,UserModel}))
