@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const {BlogModel} = require('./models/mongodb/blog')
+const {CommentModel} = require('./models/mongodb/comment')
 const {createBlogRouter} = require('./routers/blog')
 const middleware = require('./utils/middleware')
 require('express-async-errors')
@@ -18,10 +19,10 @@ app.use(express.json())
 app.use('/api/blogs', createBlogRouter({BlogModel,UserModel}))
 app.use('/api/users', createUserRouter({UserModel}))
 app.use('/api/auth', createAuthRouter({UserModel}))
-app.use('/api/comments', createCommentRouter({BlogModel,UserModel}))
+app.use('/api/comments', createCommentRouter({CommentModel,UserModel}))
 
 if(NODE_ENV === 'test'){
-    app.use('/api/test',createTestRouter({BlogModel,UserModel}))
+    app.use('/api/test',createTestRouter({CommentModel,UserModel}))
 }
 
 app.use(middleware.unknownEndpoint)
