@@ -19,7 +19,7 @@ app.use(express.json())
 app.use('/api/blogs', createBlogRouter({BlogModel,UserModel}))
 app.use('/api/users', createUserRouter({UserModel}))
 app.use('/api/auth', createAuthRouter({UserModel}))
-app.use('/api/comments', createCommentRouter({CommentModel,UserModel}))
+app.use('/api/comments', createCommentRouter({Model:CommentModel,UserModel}))
 
 if(NODE_ENV === 'test'){
     app.use('/api/test',createTestRouter({CommentModel,UserModel}))

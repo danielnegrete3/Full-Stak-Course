@@ -11,12 +11,26 @@ class BlogModel {
 
   static async getAll()
   {
-    return Blog.find({}).populate('user').populate('comments')
+    return Blog.find({}).populate('user', '_id username name').populate({
+                                                      path: 'comments',
+                                                      populate: { 
+                                                        path: 'user',
+                                                        select: '_id username name'
+                                                      }
+                                                    }
+                                                  )
   }
 
   static async findById({id,user})
   {
-    return Blog.find({_id: id}).populate('user').populate('comments')
+    return Blog.find({_id: id}).populate('user', '_id username name').populate({
+                                                      path: 'comments',
+                                                      populate: { 
+                                                        path: 'user',
+                                                        select: '_id username name'
+                                                      }
+                                                    }
+                                                  )
   }
 
   static async create({input, user}){
@@ -25,11 +39,25 @@ class BlogModel {
       //  save in user
       user.blogs.push(newBlog.id)
       await user.save()
-      return (await newBlog.save()).populate('user').populate('comments')
+      return (await newBlog.save()).populate('user', '_id username name').populate({
+                                                      path: 'comments',
+                                                      populate: { 
+                                                        path: 'user',
+                                                        select: '_id username name'
+                                                      }
+                                                    }
+                                                  )
   }
 
   static async update({data,id}){
-    return await Blog.findOneAndUpdate({_id:id},data,{ new: true,runValidators: true, context: 'query' }).populate('user').populate('comments')
+    return await Blog.findOneAndUpdate({_id:id},data,{ new: true,runValidators: true, context: 'query' }).populate('user', '_id username name').populate({
+                                                                                                                                path: 'comments',
+                                                                                                                                populate: { 
+                                                                                                                                  path: 'user',
+                                                                                                                                  select: '_id username name'
+                                                                                                                                }
+                                                                                                                              }
+                                                                                                                            )
   }
 
   static async delete({id,user}){

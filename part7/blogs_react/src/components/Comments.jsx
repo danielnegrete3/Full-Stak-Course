@@ -16,7 +16,7 @@ export const Comments = ({blog}) => {
 
             const body = {
                 user:user.id,
-                blog_id:blog.id,
+                blog:blog.id,
                 message:message
             }
 
@@ -43,7 +43,7 @@ export const Comments = ({blog}) => {
             <div>
                 <ul>
                     {blog.comments.map(item => 
-                        <li>[{item.user}] {item.message}</li>
+                        <li key={item.id}>[{item.user.username}] {item.message}</li>
                     )}
                 </ul>
             </div>

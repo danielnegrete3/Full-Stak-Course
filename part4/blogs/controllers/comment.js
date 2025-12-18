@@ -28,7 +28,7 @@ class CommentController{
         const {body} = req
         const newData = {
             message : body.message,
-            blog: body.id_blog,
+            blog: body.blog,
             user: user.id
         }
 
