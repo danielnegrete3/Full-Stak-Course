@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate, useParams } from "react-router";
 import { dropBlog, updateBlog } from "../../features/blogs/blogSlice";
 import blogServices from "../../services/blogs"
+import { Comments } from "../../components/Comments";
+import { insertMessage } from "../../features/messages/messageSlice";
 
 export const ViewBlog = () => {
 
@@ -20,9 +22,10 @@ export const ViewBlog = () => {
     
         const response = await blogServices.update({ blog:newBlog,id:blog.id,token:user.token })
         if(response.error){
-          showMessage({ message:response.error, messageType:'error' })
+          dispatch(insertMessage({item:{ message:response.error, messageType:'error' }}))
           return
         }
+
         dispatch(updateBlog({item:response}))
       }
 
@@ -33,7 +36,7 @@ export const ViewBlog = () => {
       
           const response = await blogServices.drop({ id:blog.id,token:user.token })
           if(response.error){
-            showMessage({ message:response.error, messageType:'error' })
+            dispatch(insertMessage({item:{ message:response.error, messageType:'error' }}))
             return
           }
           response.drop = true
@@ -54,6 +57,9 @@ export const ViewBlog = () => {
             user.username === blog.user.username &&
             <button onClick={handleDelete}>delete</button>
           }
+            <br />
+            <br />
+          <Comments blog={blog}/>
         </div>
     )
 }
