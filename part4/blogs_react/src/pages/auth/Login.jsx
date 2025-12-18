@@ -8,7 +8,7 @@ const Login = ({ setUser,showMessage }) => {
     const result = await login({ username:event.target.username.value, password:event.target.password.value })
 
     if(result.error){
-      showMessage({ message:result.error, messageType:'error' })
+      showMessage({ message:result.error, messageType:'danger' })
       return
     }
     showMessage({ message:'Loged Correctly', messageType:'success' })

@@ -1,3 +1,4 @@
+import { Row } from "react-bootstrap"
 import { NavLink } from "react-router"
 
 export const BlogCard = ({blog}) => {
@@ -9,10 +10,10 @@ export const BlogCard = ({blog}) => {
         marginBottom: 5
     }
     return(
-        <li style={blogStyle}>
+        <Row style={blogStyle}>
             <NavLink to={`/blogs/view/${blog.id}`}> 
                 {blog.title}
             </NavLink>
-        </li>
+        </Row>
     )
 }

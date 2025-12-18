@@ -3,6 +3,8 @@ import commentServices from "../services/comments"
 import { updateBlog } from "../features/blogs/blogSlice"
 import { useState } from "react"
 import { insertMessage } from "../features/messages/messageSlice"
+import { Button, Col, Container, FormControl, FormGroup, Row } from "react-bootstrap"
+import { Form } from "react-router"
 
 export const Comments = ({blog}) => {
 
@@ -22,7 +24,7 @@ export const Comments = ({blog}) => {
 
             const response = await commentServices.create({body,token:user.token})
             if(response.error){
-                dispatch(insertMessage({item:{ message:response.error, messageType:'error' }}))
+                dispatch(insertMessage({item:{ message:response.error, messageType:'danger' }}))
                 return
             }
 
@@ -33,20 +35,23 @@ export const Comments = ({blog}) => {
         }
 
     return (
-        <div>
-            <form onSubmit={handleCreateComment}>
-                <input type="text" name="comment" value={message} onChange={({ target }) => setMessage(target.value)}/>
-                <button>Add Comment</button>
-            </form>
-            <br />
-            <br />
-            <div>
-                <ul>
-                    {blog.comments.map(item => 
-                        <li key={item.id}>[{item.user.username}] {item.message}</li>
-                    )}
-                </ul>
-            </div>
-        </div>
+        <Container>
+            <Form onSubmit={handleCreateComment}>
+                <FormGroup as={Row}>
+                    <Col xs={6}>
+                        <FormControl type="text" name="comment" value={message} onChange={({ target }) => setMessage(target.value)}/>
+                    </Col>
+                    <Col>
+                        <Button type="submit" variant='secondary' size="sm">Add Comment</Button>
+                    </Col>
+                </FormGroup>
+            </Form>
+
+            <Container className=" mt-10 ">
+                {blog.comments.map(item => 
+                    <Row key={item.id}>[{item.user.username}] {item.message}</Row>
+                )}
+            </Container>
+        </Container>
     )
 }

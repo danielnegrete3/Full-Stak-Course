@@ -22,7 +22,7 @@ const NewBlog = ({ user,insertNewBlog,showMessage,cancelClick=() => {}, test=fal
 
     const response = await blogServices.create({ ...blog,token:user.token })
     if(response.error){
-      showMessage({ message:response.error, messageType:'error' })
+      showMessage({ message:response.error, messageType:'danger' })
       return
     }
 

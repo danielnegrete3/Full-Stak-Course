@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types'
+import { Container } from 'react-bootstrap'
 
 const Loged = ({ user,handleLogout }) => {
 
   return(
-    <aside>
-      {user.name} logged in <button onClick={handleLogout}>logout</button>
-    </aside>
+    <Container as="aside">
+      {user.name} logged in <Button variant="secondary" size={6} onClick={handleLogout}>logout</Button>
+    </Container>
   )
 }
 

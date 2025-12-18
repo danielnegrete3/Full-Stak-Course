@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux"
 import { UserCard } from "../../components/UserCard"
+import { CardTitle, Col, Container, Row } from "react-bootstrap"
 
 
 export const AllUsers = () => {
@@ -7,21 +8,21 @@ export const AllUsers = () => {
     const users = useSelector((state) => state.user.array)
     console.log("mi id \t", user.id)
     return (
-        <div>
-            <h2>All Users</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <td>User</td>
-                        <td>N° Blogs</td>
-                    </tr>
-                </thead>
-                <tbody>
+        <Container>
+            <CardTitle as={"h2"}>All Users</CardTitle>
+            <Container>
+                <Row>
+                    <Col className=" fs-5 fw-bold" xs={6}>
+                        User
+                    </Col>
+                    <Col className=" fs-5 fw-bold">
+                        N° Blogs
+                    </Col>
+                </Row>
                     {users.map(item =>
                         <UserCard key={item.id} user={item} isUser={user.id == item.id}/>
                     )}
-                </tbody>
-            </table>
-        </div>
+            </Container>
+        </Container>
     )
 }

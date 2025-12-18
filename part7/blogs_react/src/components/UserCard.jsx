@@ -1,17 +1,18 @@
+import { Col, Row } from "react-bootstrap"
 import { NavLink } from "react-router"
 
 export const UserCard = ({user,isUser}) => {
     return(
-        <tr>
-            <td>
+        <Row>
+            <Col xs={6}>
                 <NavLink to={`/users/${user.id}`}> 
                 { isUser && <span>{"(you)\t"}</span>}
                 {user.name}: ({user.username})
                 </NavLink>
-            </td>
-            <td style={{textAlign:"center"}}>
+            </Col>
+            <Col>
                 {user.blogs.length}
-            </td>
-        </tr>
+            </Col>
+        </Row>
     )
 }

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux"
 import { NavLink, useNavigate } from 'react-router'
 import { insertMessage } from '../../features/messages/messageSlice'
 import { setAuthUser } from '../../features/auth/authSlice'
+import { Button, CardTitle, Col, Container, Form, FormControl, FormGroup, FormLabel, Row } from 'react-bootstrap'
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -14,7 +15,7 @@ const Login = () => {
     const result = await login({ username:event.target.username.value, password:event.target.password.value })
 
     if(result.error){
-      dispatch(insertMessage({ item:{message:result.error, messageType:'error' }}))
+      dispatch(insertMessage({ item:{message:result.error, messageType:'danger' }}))
       return
     }
     
@@ -28,30 +29,43 @@ const Login = () => {
   }
 
   return(
-    <div>
-      <h2>Log in to application</h2>
-      <form onSubmit={handleLogin}>
-        <div>
+    <Container>
+      <CardTitle as={"h2"}>Log in to application</CardTitle>
+      <Form onSubmit={handleLogin}>
+        <FormGroup>
+          <FormLabel>
                     username
-          <input
+          </FormLabel>
+          <FormControl
             type="text"
             name="username"
             data-testid='username'
           />
-        </div>
-        <div>
+        </FormGroup>
+        <FormGroup>
+          <FormLabel>
                     password
-          <input
+          </FormLabel>
+          <FormControl
             type="password"
             name="password"
             data-testid='password'
           />
-        </div>
-        <NavLink to={{pathname:"/registrations"}}>Sing up</NavLink>
-        <br />
-        <button type="submit">login</button>
-      </form>
-    </div>
+        </FormGroup>
+        
+        <Row className='justify-content-end mt-2'>
+          <Col >
+            <NavLink to={{pathname:"/registrations"}}>Sing up</NavLink>
+          </Col>
+        </Row>
+
+         <Row className="justify-content-center mt-2">
+            <Col xs="auto">
+              <Button type="submit" variant='primary'>Login</Button>
+            </Col>
+          </Row>
+      </Form>
+    </Container>
   )
 }
 

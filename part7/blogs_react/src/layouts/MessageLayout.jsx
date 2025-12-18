@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "@reduxjs/toolkit";
 import { shiftMessage } from "../features/messages/messageSlice";
 import { useEffect } from "react";
+import { Container } from "react-bootstrap";
 
 export const MessageLayout = () => {
     const dispatch = useDispatch();
@@ -21,13 +22,13 @@ export const MessageLayout = () => {
     },[current,time])
 
     return(
-        <div> 
+        <Container> 
 
             < Notification content={current?.message??''} type={current?.messageType??''} show={current}/>
             
             <br />
 
             <Outlet/>
-        </div>
+        </Container>
     )
 }

@@ -25,7 +25,7 @@ const Blog = ({ blog, user, showMessage, changeBlogs, test=false }) => {
 
     const response = await blogServices.update({ blog:newBlog,id:blog.id,token:user.token })
     if(response.error){
-      showMessage({ message:response.error, messageType:'error' })
+      showMessage({ message:response.error, messageType:'danger' })
       return
     }
     changeBlogs(response)
@@ -38,7 +38,7 @@ const Blog = ({ blog, user, showMessage, changeBlogs, test=false }) => {
 
     const response = await blogServices.drop({ id:blog.id,token:user.token })
     if(response.error){
-      showMessage({ message:response.error, messageType:'error' })
+      showMessage({ message:response.error, messageType:'danger' })
       return
     }
     response.drop = true

@@ -4,6 +4,7 @@ import { insertBlog } from '../../features/blogs/blogSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { insertMessage } from '../../features/messages/messageSlice'
+import { Button, CardTitle, CloseButton, Col, Container, Form, FormControl, FormGroup, FormLabel, Row } from 'react-bootstrap'
 
 export const NewBlog = ({}) => {
   const [title, setTitle] = useState('')
@@ -15,7 +16,7 @@ export const NewBlog = ({}) => {
 
 
   const cancelClick = () => {
-    navigate('blogs/all')
+    navigate('/blogs/all')
   }
 
   const handleSubmit = async (event) => {
@@ -28,7 +29,7 @@ export const NewBlog = ({}) => {
 
     const response = await blogServices.create({ ...blog,token:user.token })
     if(response.error){
-      dispatch(insertMessage({item:{ message:response.error, messageType:'error' }}))
+      dispatch(insertMessage({item:{ message:response.error, messageType:'danger' }}))
       return
     }
 
@@ -45,42 +46,62 @@ export const NewBlog = ({}) => {
   }
 
   return (
-    <div>
-      <h3>New Blog</h3>
-      <form onSubmit={handleSubmit}>
-        <div>
-                    title
-          <input
-            type="text"
-            name="title"
-            value={title}
-            placeholder='title'
-            onChange={({ target }) => setTitle(target.value)}
-          />
-        </div>
-        <div>
-                    url
-          <input
-            type="text"
-            name="url"
-            value={url}
-            placeholder='url'
-            onChange={({ target }) => setUrl(target.value)}
-          />
-        </div>
-        <div>
-                    author
-          <input
-            type="text"
-            name="author"
-            value={author}
-            placeholder='author'
-            onChange={({ target }) => setAuthor(target.value)}
-          />
-        </div>
-        <button type="submit">Create</button>
-      </form>
-      <button onClick={cancelClick}>Cancel</button>
-    </div>
+    <Container>
+      <CardTitle as="h2">New Blog</CardTitle>
+
+      <Row className="justify-content-end">
+        <Col xs="auto">
+          <CloseButton onClick={cancelClick}/>
+        </Col>
+      </Row>
+
+      <Form onSubmit={handleSubmit}>
+        
+        <FormGroup>
+            <FormLabel>
+              Title 
+            </FormLabel>
+              <FormControl
+                type="text"
+                name="title"
+                value={title}
+                placeholder='title'
+                onChange={({ target }) => setTitle(target.value)}
+              />
+        </FormGroup>
+
+        <FormGroup>
+            <FormLabel>
+              url
+            </FormLabel>
+              <FormControl
+                type="text"
+                name="url"
+                value={url}
+                placeholder='url'
+                onChange={({ target }) => setUrl(target.value)}
+              />
+        </FormGroup>
+
+        <FormGroup>
+            <FormLabel>
+              author
+            </FormLabel>
+              <FormControl
+                type="text"
+                name="author"
+                value={author}
+                placeholder='author'
+                onChange={({ target }) => setAuthor(target.value)}
+              />
+        </FormGroup>            
+                     
+        <Row className="justify-content-center mt-2">
+          <Col xs="auto">
+            <Button type="submit" variant='primary'>Create</Button>
+          </Col>
+        </Row>
+      </Form>
+    </Container>
   )
 }

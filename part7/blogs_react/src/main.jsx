@@ -4,6 +4,7 @@ import { RouterProvider } from "react-router/dom";
 import store from './store'
 import {Provider} from 'react-redux'
 import { MapRouters } from './routers/map';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const router = createBrowserRouter(MapRouters);
 

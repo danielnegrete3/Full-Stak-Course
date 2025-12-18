@@ -1,3 +1,4 @@
+import { Alert } from "react-bootstrap"
 
 export const Notification = ({content,show,type}) => {
   const style = {
@@ -8,9 +9,9 @@ export const Notification = ({content,show,type}) => {
   }
   if(show){
     return (
-      <div style={style}>
+      <Alert style={style} variant={type}>
         {content}
-      </div>
+      </Alert>
     )
     
   }

@@ -4,6 +4,7 @@ import { dropBlog, updateBlog } from "../../features/blogs/blogSlice";
 import blogServices from "../../services/blogs"
 import { Comments } from "../../components/Comments";
 import { insertMessage } from "../../features/messages/messageSlice";
+import { Button, CardLink, CardText, CardTitle, Container } from "react-bootstrap";
 
 export const ViewBlog = () => {
 
@@ -22,7 +23,7 @@ export const ViewBlog = () => {
     
         const response = await blogServices.update({ blog:newBlog,id:blog.id,token:user.token })
         if(response.error){
-          dispatch(insertMessage({item:{ message:response.error, messageType:'error' }}))
+          dispatch(insertMessage({item:{ message:response.error, messageType:'danger' }}))
           return
         }
 
@@ -36,7 +37,7 @@ export const ViewBlog = () => {
       
           const response = await blogServices.drop({ id:blog.id,token:user.token })
           if(response.error){
-            dispatch(insertMessage({item:{ message:response.error, messageType:'error' }}))
+            dispatch(insertMessage({item:{ message:response.error, messageType:'danger' }}))
             return
           }
           response.drop = true
@@ -45,21 +46,21 @@ export const ViewBlog = () => {
         }
 
     return (
-        <div>
-            <h2>{blog.title}</h2>
-            <h3>Author:{blog.author}</h3>
-            <a href={blog.url}>{blog.url}</a> 
-            <p>
-                Likes : {blog.likes} <button onClick={handleLike}>like</button>
-            </p>
+        <Container>
+            <CardTitle as="h2">{blog.title}</CardTitle>
+            <CardTitle as="h3">Author:{blog.author}</CardTitle>
+            <CardLink href={blog.url}>{blog.url}</CardLink> 
+            <CardText>
+                Likes : {blog.likes} <Button variant="outline-primary" size="sm" onClick={handleLike}>like</Button>
+            </CardText>
             <br />
           {
             user.username === blog.user.username &&
-            <button onClick={handleDelete}>delete</button>
+            <Button variant="danger" onClick={handleDelete}>delete</Button>
           }
             <br />
             <br />
           <Comments blog={blog}/>
-        </div>
+        </Container>
     )
 }

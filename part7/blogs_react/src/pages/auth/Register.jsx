@@ -3,6 +3,7 @@ import { post } from "../../services/users"
 import { NavLink, useNavigate } from "react-router"
 import { useDispatch } from "react-redux"
 import { insertMessage } from "../../features/messages/messageSlice"
+import { Button, CardTitle, Col, Container, Form, FormControl, FormGroup, FormLabel, Row } from "react-bootstrap"
 
 export const Register = () => {
     const username = useRef('')
@@ -25,7 +26,7 @@ export const Register = () => {
         const result = await post({body})
         if(result.error){
             console.log('entro aca ')
-            dispatch(insertMessage({ item:{message:result.error, messageType:'error' }}))
+            dispatch(insertMessage({ item:{message:result.error, messageType:'danger' }}))
             return
         }
 
@@ -33,30 +34,46 @@ export const Register = () => {
     }
 
     return(
-        <div>
-            <h2>Register a new user</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    username
-                    <input name="username" ref={username}/>
-                </div>
-                <div>
-                    name
-                    <input name="name" ref={name}/>
-                </div>
-                <div>
-                    password
-                    <input name="password" ref={password}/>
-                </div>
-                <div>
-                    confirm password
-                    <input name="confPassword" ref={confPassword}/>
-                </div>                
+        <Container>
+            <CardTitle as={"h2"}>Register a new user</CardTitle>
+            <Form onSubmit={handleSubmit}>
+                <FormGroup>
+                    <FormLabel>
+                        username
+                    </FormLabel>
+                    <FormControl name="username" ref={username}/>
+                </FormGroup>
+                <FormGroup>
+                    <FormLabel>
+                        name
+                    </FormLabel>
+                    <FormControl name="name" ref={name}/>
+                </FormGroup>
+                <FormGroup>
+                    <FormLabel>
+                        password
+                    </FormLabel>
+                    <FormControl name="password" ref={password}/>
+                </FormGroup>
+                <FormGroup>
+                    <FormLabel>
+                        confirm password
+                    </FormLabel>
+                    <FormControl name="confPassword" ref={confPassword}/>
+                </FormGroup>                
 
-                <NavLink to={{pathname:"/login"}}>sing in</NavLink>
-                <br />
-                <button type="submit">sign up</button>
-            </form>
-        </div>
+                <Row className='justify-content-end mt-2'>
+                    <Col >
+                        <NavLink to={{pathname:"/login"}}>Sing in</NavLink>
+                    </Col>
+                </Row>
+
+                <Row className="justify-content-center mt-2">
+                    <Col xs="auto">
+                        <Button type="submit" variant='primary'>Sign up</Button>
+                    </Col>
+                </Row>
+            </Form>
+        </Container>
     )
 }

@@ -1,3 +1,4 @@
+import { CardTitle, Container, Row, Stack } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import {  Navigate, useParams } from "react-router";
 
@@ -11,14 +12,14 @@ export const InfoUser = ({}) => {
     } 
 
     return(
-        <div>
-            <h3>User {user.name}  ({user.username})</h3>
-            <h4>Added Blogs</h4>
-            <ul>
+        <Container>
+            <CardTitle as="h2">User {user.name}  ({user.username})</CardTitle>
+            <CardTitle as="h4">Added Blogs</CardTitle>
+            <Stack>
                 {user.blogs.map(item =>
-                    <li>{item.title}</li>
+                    <Row className=" fs-6 fw-bold">{item.title}</Row>
                 )}
-            </ul>
-        </div>
+            </Stack>
+        </Container>
     )
 }
