@@ -1,18 +1,23 @@
-import { Col, Container, Row } from "react-bootstrap"
+import {  Container, Nav, Navbar, NavbarBrand, NavbarCollapse, NavbarToggle } from "react-bootstrap"
 import { NavLink } from "react-router"
 
 export const Menu = () => {
 
     return(
-        <Container>
-            <Row>
-                <Col>
+        <Navbar expand="lg" className="bg-body-tertiary">
+            <Container>
+                <NavbarBrand href="#home">Library App</NavbarBrand>
+                <NavbarToggle aria-controls="basic-navbar-nav" />
+                <NavbarCollapse id="basic-navbar-nav">
+                <Nav className="me-auto gap-3">
                     <NavLink to={'/author/all'}>Authors</NavLink>
-                </Col>
-                <Col>
+                    <NavLink to={'/author/edit'}>Edit Authors</NavLink>
                     <NavLink to={'/book/all'}>Books</NavLink>
-                </Col>
-            </Row>
-        </Container>
+                    <NavLink to={'/book/add'}>Add Books</NavLink>
+
+                </Nav>
+                </NavbarCollapse>
+            </Container>
+        </Navbar>
     )
 }

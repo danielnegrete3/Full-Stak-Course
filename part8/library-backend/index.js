@@ -17,7 +17,7 @@ const typeDefs = `
 
   type Author {
     name: String!
-    born:Int!
+    born:Int
     bookCount:Int!
     id: ID!
   }
@@ -61,7 +61,7 @@ const resolvers = {
         genres: args.genres,
       }
       books.push(newBook)
-      if(!authors.find((val)=>val === args.author)){
+      if(!authors.find((val)=>val.name === args.author)){
         authors.push({
           name:args.author,
           born:null,

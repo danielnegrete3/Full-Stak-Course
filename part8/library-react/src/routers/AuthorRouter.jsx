@@ -1,4 +1,5 @@
 import { AllAuthors } from "../Pages/AllAuthors";
+import { ChangeAuthor } from "../Pages/ChangeAuthor";
 
 
 export const AuthorRouter = [
@@ -8,6 +9,10 @@ export const AuthorRouter = [
             {
                 path:'all',
                 Component:AllAuthors,
+            },
+            {
+                path:'edit',
+                Component:ChangeAuthor,
             }
         ]
     }

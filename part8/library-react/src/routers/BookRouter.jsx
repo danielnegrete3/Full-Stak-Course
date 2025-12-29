@@ -1,3 +1,4 @@
+import { AddBooks } from "../Pages/AddBooks";
 import { AllBooks } from "../Pages/AllBooks";
 
 export const BookRouter = [
@@ -7,6 +8,10 @@ export const BookRouter = [
             {
                 path:'all',
                 Component:AllBooks,
+            },
+            {
+                path:'add',
+                Component:AddBooks
             }
         ]
     }
