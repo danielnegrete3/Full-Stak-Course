@@ -1,19 +1,20 @@
 import { AuthorFunctions } from "../../logic/author.js"
+import { ErrorHandler } from "../../utils/ErrorHandler.js"
 
 export const CreateAuthorResolver = (data)=>{
     const functions = new AuthorFunctions(data)
     return {
         Own:{
             Author: {
-                bookCount:functions.bookCount.bind(functions)
+                bookCount:ErrorHandler(functions.bookCount)
             }
         },
         Query:{
-            authorCount:functions.authorCount.bind(functions),
-            allAuthors:functions.allAuthors.bind(functions),
+            authorCount:ErrorHandler(functions.authorCount),
+            allAuthors:ErrorHandler(functions.allAuthors),
         },
         Mutation:{
-            editAuthor:functions.editAuthor.bind(functions),
+            editAuthor:ErrorHandler(functions.editAuthor),
         }
     }
 }

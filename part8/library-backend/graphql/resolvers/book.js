@@ -1,19 +1,20 @@
 import { BookFunctions } from "../../logic/book.js"
+import { ErrorHandler } from "../../utils/ErrorHandler.js"
 
 export const CreateBookResolver = (data)=>{
     const functions = new BookFunctions(data)
     return {
         Own:{
             Book:{
-                author:functions.author.bind(functions)
+                author:ErrorHandler(functions.author)
             }
         },
         Query:{
-            bookCount:functions.bookCount.bind(functions),
-            allBooks:functions.allBooks.bind(functions),
+            bookCount:ErrorHandler(functions.bookCount),
+            allBooks:ErrorHandler(functions.allBooks),
         },
         Mutation:{
-            addBook:functions.addBook.bind(functions)
+            addBook:ErrorHandler(functions.addBook)
         }
     }
 }

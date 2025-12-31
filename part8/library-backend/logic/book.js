@@ -3,17 +3,21 @@ export class BookFunctions{
     constructor({BookModel,AuthorModel}){
         this.BookModel = BookModel
         this.AuthorModel = AuthorModel
+        this.author = this.author.bind(this)
+        this.bookCount = this.bookCount.bind(this)
+        this.allBooks = this.allBooks.bind(this)
+        this.addBook = this.addBook.bind(this)
     }
 
-    async author(root){
+    author = async (root) => {
         return (await this.AuthorModel.findBy({filter:{id:root.author}}))[0]
     }
 
-    async bookCount(){
+    bookCount = async () => {
         return await this.BookModel.count()
     }
 
-    async allBooks(root,args){
+    allBooks = async (root,args)=> {
         let filter = {}
         if(args.name)filter.title = args.name
         if(args.genres)filter.genres = {$all:args.genres}
@@ -25,7 +29,7 @@ export class BookFunctions{
         return await this.BookModel.findBy({filter})
     }
 
-    async addBook(root,args){
+    addBook = async (root,args)=>{
         let author = await this.AuthorModel.findBy({filter:{name:args.author}})
         if(author.length == 0){
           author =  await this.AuthorModel.create({input:{name:args.author}})

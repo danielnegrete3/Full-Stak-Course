@@ -1,11 +1,12 @@
 import { GraphQLError } from 'graphql';
 
 export const ErrorHandler = (fn) => {
-    return (root,args)=>{
+    console.log(fn.BookModel)
+    return function(root,args){
         try{
-            fn(root,args)
+            return fn(root,args)
         }catch(e){
-            transformToGraphQLError(e,args)
+            throw transformToGraphQLError(e,args)
         }
     }
 }
