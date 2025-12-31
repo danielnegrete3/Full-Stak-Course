@@ -11,10 +11,25 @@ export class BookModel {
       {
         return Book.find({})
       }
+
+    static async count({filter={},options={}}={}){
+
+      if (filter && filter.id) {
+        filter._id = filter.id;
+        delete filter.id;
+      }
+      
+      return Book.countDocuments(filter,options)
+    }
     
-      static async findById({id})
+      static async findBy({filter={}}={})
       {
-        return Book.find({_id: id})
+        if (filter && filter.id) {
+          filter._id = filter.id;
+          delete filter.id;
+        }
+
+        return Book.find(filter)
       }
     
       static async create({input}){

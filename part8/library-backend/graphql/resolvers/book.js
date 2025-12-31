@@ -1,20 +1,19 @@
 import { BookFunctions } from "../../logic/book.js"
 
-export const CreateBookResolver = ({model})=>{
-    const functions = new BookFunctions({model})
-    
+export const CreateBookResolver = (data)=>{
+    const functions = new BookFunctions(data)
     return {
         Own:{
             Book:{
-                author:functions.author
+                author:functions.author.bind(functions)
             }
         },
         Query:{
-            bookCount:functions.bookCount,
-            allBooks:functions.allBooks,
+            bookCount:functions.bookCount.bind(functions),
+            allBooks:functions.allBooks.bind(functions),
         },
         Mutation:{
-            addBook:functions.addBook
+            addBook:functions.addBook.bind(functions)
         }
     }
 }

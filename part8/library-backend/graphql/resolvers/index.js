@@ -3,8 +3,8 @@ import { BookModel } from "../../models/mongodb/Book.js";
 import { CreateAuthorResolver } from "./author.js";
 import { CreateBookResolver } from "./book.js";
 
-const AuthorResolver = CreateAuthorResolver({model:AuthorModel})
-const BookResolver = CreateBookResolver({model:BookModel})
+const AuthorResolver = CreateAuthorResolver({AuthorModel,BookModel})
+const BookResolver = CreateBookResolver({BookModel,AuthorModel})
 
 const Query = {
     ...AuthorResolver.Query,

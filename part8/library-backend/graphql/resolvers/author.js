@@ -1,20 +1,19 @@
 import { AuthorFunctions } from "../../logic/author.js"
 
-export const CreateAuthorResolver = ({model})=>{
-    const functions = new AuthorFunctions({model})
-
+export const CreateAuthorResolver = (data)=>{
+    const functions = new AuthorFunctions(data)
     return {
         Own:{
             Author: {
-                bookCount:functions.bookCount
+                bookCount:functions.bookCount.bind(functions)
             }
         },
         Query:{
-            authorCount:functions.authorCount,
-            allAuthors:functions.allAuthors,
+            authorCount:functions.authorCount.bind(functions),
+            allAuthors:functions.allAuthors.bind(functions),
         },
         Mutation:{
-            editAuthor:functions.editAuthor
+            editAuthor:functions.editAuthor.bind(functions),
         }
     }
 }

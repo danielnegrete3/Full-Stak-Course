@@ -1,23 +1,27 @@
 
 export class AuthorFunctions{
-    constructor({model}){
-        this.Model = model
+    constructor({AuthorModel,BookModel}){
+        this.AuthorModel = AuthorModel
+        this.BookModel = BookModel
     }
 
-    bookCount(root){
-        return 0
+    async bookCount(root){
+        return this.BookModel.count({filter:{author:root.id}})
     }
 
-    authorCount(){
-        return 0
+    async authorCount(){
+        return await this.AuthorModel.count()
     }
 
-    allAuthors(){
-        return[]
+    async allAuthors(){
+        return await this.AuthorModel.getAll()
     }
 
-    editAuthor(root,args){
-
+    async editAuthor(root,args){
+        let author = (await this.AuthorModel.findBy({filter:{name:args.name}}))[0]
+        author = await this.AuthorModel.update({id:author._id,data:{born:args.born}})
+        
+        return author
     }
 
 }
