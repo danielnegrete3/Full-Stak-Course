@@ -1,24 +1,26 @@
 import { AuthorModel } from "../../models/mongodb/Author.js";
 import { BookModel } from "../../models/mongodb/Book.js";
+import { UserModel } from "../../models/mongodb/User.js";
 import { CreateAuthorResolver } from "./author.js";
 import { CreateBookResolver } from "./book.js";
+import { CreateUserResolver } from "./user.js";
 
-const AuthorResolver = CreateAuthorResolver({AuthorModel,BookModel})
-const BookResolver = CreateBookResolver({BookModel,AuthorModel})
+const FunctionResolvers = [
+    CreateAuthorResolver({AuthorModel,BookModel}),
+    CreateBookResolver({BookModel,AuthorModel}),
+    CreateUserResolver({UserModel}),
+]
 
-const Query = {
-    ...AuthorResolver.Query,
-    ...BookResolver.Query,
-}
+export const GenereateResolvers = (models) => {
+    let resolvers = {}
+    let Query = {}
+    let Mutation = {}
 
-const Mutation = {
-    ...AuthorResolver.Mutation,
-    ...BookResolver.Mutation,
-}
+    FunctionResolvers.forEach(resolver => {
+        Query = {...Query,...resolver.Query}
+        Mutation = {...Mutation, ...resolver.Mutation}
+        resolvers = {...resolvers, ...resolver.Own}
+    })
 
-export const resolvers = {
-    Query,
-    Mutation,
-    ...AuthorResolver.Own,
-    ...BookResolver.Own,
+    return {...resolvers,Query,Mutation}
 }
