@@ -4,9 +4,13 @@ import {IndexDef} from './graphql/schema/index.js'
 import {GenereateResolvers} from './graphql/resolvers/index.js'
 import { UserModel } from './models/mongodb/User.js'
 import { UserContextMiddleware } from './middlewares/UserContextMiddleware.js'
+import { BookModel } from './models/mongodb/Book.js'
+import { AuthorModel } from './models/mongodb/Author.js'
 
 const models = {
   UserModel,
+  BookModel,
+  AuthorModel
 }
 
 const server = new ApolloServer({

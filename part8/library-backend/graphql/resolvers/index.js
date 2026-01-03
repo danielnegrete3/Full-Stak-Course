@@ -5,13 +5,13 @@ import { CreateAuthorResolver } from "./author.js";
 import { CreateBookResolver } from "./book.js";
 import { CreateUserResolver } from "./user.js";
 
-const FunctionResolvers = [
-    CreateAuthorResolver({AuthorModel,BookModel}),
-    CreateBookResolver({BookModel,AuthorModel}),
-    CreateUserResolver({UserModel}),
-]
 
 export const GenereateResolvers = (models) => {
+    const FunctionResolvers = [
+        CreateAuthorResolver(models),
+        CreateBookResolver(models),
+        CreateUserResolver(models),
+    ]
     let resolvers = {}
     let Query = {}
     let Mutation = {}

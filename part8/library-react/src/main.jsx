@@ -14,13 +14,16 @@ const client = new ApolloClient({
 import { RouterProvider } from "react-router/dom";
 import { createBrowserRouter } from 'react-router';
 import { ApolloProvider } from '@apollo/client/react';
+import { AuthProvider } from './context/providers/AuthProvider.jsx';
 
 const router = createBrowserRouter(MapRouters);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ApolloProvider client={client}>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </ApolloProvider>
   </StrictMode>,
 )

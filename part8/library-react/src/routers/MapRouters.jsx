@@ -1,5 +1,6 @@
 import { Basic } from "../layouts/Basic";
 import { AuthorRouter } from "./AuthorRouter";
+import { AuthRouter } from "./AuthRouter";
 import { BookRouter } from "./BookRouter";
 
 
@@ -10,6 +11,7 @@ export const MapRouters = [
        children:[
             ...BookRouter,
             ...AuthorRouter,
+            ...AuthRouter,
        ]
     }
 ]

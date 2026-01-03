@@ -1,3 +1,4 @@
+import { IsLoged } from "../utils/IsLoged.js"
 
 export class AuthorFunctions{
     constructor({AuthorModel,BookModel}){
@@ -21,7 +22,9 @@ export class AuthorFunctions{
         return await this.AuthorModel.getAll()
     }
 
-    editAuthor = async(root,args)=>{
+    editAuthor = async(root,args,context)=>{
+        IsLoged({context})
+        
         let author = (await this.AuthorModel.findBy({filter:{name:args.name}}))[0]
         author = await this.AuthorModel.update({id:author._id,data:{born:args.born}})
 

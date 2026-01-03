@@ -1,3 +1,4 @@
+import { IsLoged } from "../utils/IsLoged.js"
 
 export class BookFunctions{
     constructor({BookModel,AuthorModel}){
@@ -29,7 +30,9 @@ export class BookFunctions{
         return await this.BookModel.findBy({filter})
     }
 
-    addBook = async (root,args)=>{
+    addBook = async (root,args,context)=>{
+        IsLoged({context})
+
         let author = await this.AuthorModel.findBy({filter:{name:args.author}})
         if(author.length == 0){
           author =  await this.AuthorModel.create({input:{name:args.author}})
