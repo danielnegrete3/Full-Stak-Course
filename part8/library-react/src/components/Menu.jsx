@@ -32,6 +32,7 @@ export const Menu = () => {
                         <>
                             <NavLink to={'/author/edit'}>Edit Authors</NavLink>
                             <NavLink to={'/book/add'}>Add Books</NavLink>
+                            <NavLink to={'/book/recomendations'}>Recomendations</NavLink>
                             <NavLink onClick={handleLogout}>Logout</NavLink>
                         </>
                     }

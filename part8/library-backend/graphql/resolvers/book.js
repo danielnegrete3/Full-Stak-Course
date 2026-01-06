@@ -12,6 +12,7 @@ export const CreateBookResolver = (data)=>{
         Query:{
             bookCount:ErrorHandler(functions.bookCount),
             allBooks:ErrorHandler(functions.allBooks),
+            allGenres:ErrorHandler(functions.allGenres),
         },
         Mutation:{
             addBook:ErrorHandler(functions.addBook)

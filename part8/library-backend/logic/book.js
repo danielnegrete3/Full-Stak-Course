@@ -8,6 +8,7 @@ export class BookFunctions{
         this.bookCount = this.bookCount.bind(this)
         this.allBooks = this.allBooks.bind(this)
         this.addBook = this.addBook.bind(this)
+        this.allGenres = this.allGenres.bind(this)
     }
 
     author = async (root) => {
@@ -28,6 +29,11 @@ export class BookFunctions{
         }
 
         return await this.BookModel.findBy({filter})
+    }
+
+    allGenres = async () => {
+        const books = await this.allBooks({},{})
+        return [...new Set(books.flatMap(b => b.genres))];
     }
 
     addBook = async (root,args,context)=>{

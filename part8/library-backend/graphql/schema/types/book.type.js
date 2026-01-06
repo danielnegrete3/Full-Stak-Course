@@ -12,6 +12,7 @@ export const BookType = `
 export const BookQueries = `
     bookCount: Int!
     allBooks(name:String,genres:[String],author:String): [Book!]!
+    allGenres:[String!]
 `
 
 export const BookMutations = `
