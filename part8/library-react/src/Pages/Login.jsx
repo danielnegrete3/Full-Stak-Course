@@ -1,16 +1,27 @@
 import { NavLink, useNavigate } from 'react-router'
 import { Button, CardTitle, Col, Container, Form, FormControl, FormGroup, FormLabel, Row } from 'react-bootstrap'
+import { useApolloClient, useMutation } from '@apollo/client/react';
+import { LOGIN } from '../graphql/mutations/auth';
+import { ME } from '../graphql/queries/auth';
 
 export const Login = () => {
   const navigate = useNavigate();
+  const client = useApolloClient();
+  const [login] = useMutation(LOGIN)
+
 
   const handleLogin = async (event) => {
     event.preventDefault()
     
+    const result = await login({
+      variables:{
+        username:event.target.username.value,
+        password:event.target.password.value
+      }
+    })
 
-
-    globalThis.localStorage.setItem('library-react', JSON.stringify([]))
-
+    globalThis.localStorage.setItem('library-react', result.data.login.value)
+    client.resetStore()
     navigate('/')
   }
 

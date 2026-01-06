@@ -5,9 +5,9 @@ import { BookRow } from "../components/BookRow"
 
 
 export const AllBooks = () => {
-    const result = useQuery(ALL_BOOKS,{fetchPolicy: 'network-only'})
+    const {loading,data,error} = useQuery(ALL_BOOKS,{fetchPolicy: 'network-only'})
 
-    if (result.loading) {
+    if (loading) {
         return <div>loading...</div>
     }
 
@@ -19,7 +19,7 @@ export const AllBooks = () => {
                 <Col xs={4} className=" fs-6 fw-bold">Author</Col>
                 <Col xs={2} className=" fs-6 fw-bold">Published</Col>
             </Row>
-            {result.data.allBooks.map((val) => <BookRow book={val}/>)}
+            {data.allBooks.map((val) => <BookRow book={val}/>)}
         </Container>
     )
 }

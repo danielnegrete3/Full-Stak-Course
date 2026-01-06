@@ -1,3 +1,4 @@
+import { AuthLayout } from "../layouts/AuthLayout";
 import { AddBooks } from "../Pages/AddBooks";
 import { AllBooks } from "../Pages/AllBooks";
 
@@ -10,8 +11,13 @@ export const BookRouter = [
                 Component:AllBooks,
             },
             {
-                path:'add',
-                Component:AddBooks
+                Component:AuthLayout,
+                children:[
+                    {
+                        path:'add',
+                        Component:AddBooks
+                    }
+                ]
             }
         ]
     }

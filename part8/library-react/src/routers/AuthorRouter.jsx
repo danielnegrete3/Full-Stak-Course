@@ -1,3 +1,4 @@
+import { AuthLayout } from "../layouts/AuthLayout";
 import { AllAuthors } from "../Pages/AllAuthors";
 import { ChangeAuthor } from "../Pages/ChangeAuthor";
 
@@ -11,8 +12,13 @@ export const AuthorRouter = [
                 Component:AllAuthors,
             },
             {
-                path:'edit',
-                Component:ChangeAuthor,
+                Component:AuthLayout,
+                children:[
+                    {
+                        path:'edit',
+                        Component:ChangeAuthor,
+                    }
+                ]
             }
         ]
     }

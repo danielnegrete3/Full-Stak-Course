@@ -3,12 +3,28 @@ import { createRoot } from 'react-dom/client'
 import { MapRouters } from './routers/MapRouters.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ApolloClient, gql, HttpLink, InMemoryCache } from '@apollo/client'
+import { SetContextLink } from '@apollo/client/link/context'
+
+const authLink  = new SetContextLink(({ headers }) => {
+  const token = localStorage.getItem('library-react')
+  const myHeaders = {
+    ...headers
+  }
+
+  if(token && token != 'null'){
+    myHeaders['authorization'] = `Bearer ${token}`
+  }
+
+  return {
+    headers:myHeaders
+  }
+})
+
+const httpLink = new HttpLink({ uri: 'http://localhost:4000' })
 
 const client = new ApolloClient({
-  link: new HttpLink({
-    uri: 'http://localhost:4000',
-  }),
   cache: new InMemoryCache(),
+  link: authLink.concat(httpLink)
 })
 
 import { RouterProvider } from "react-router/dom";

@@ -1,3 +1,4 @@
+import { redirect } from "react-router";
 import { Basic } from "../layouts/Basic";
 import { AuthorRouter } from "./AuthorRouter";
 import { AuthRouter } from "./AuthRouter";
@@ -13,5 +14,9 @@ export const MapRouters = [
             ...AuthorRouter,
             ...AuthRouter,
        ]
+    },
+    {
+        path:'*',
+        loader:() => redirect("/")
     }
 ]
