@@ -23,3 +23,7 @@ export const BookMutations = `
       genres: [String!]!
     ):Book!
 `
+
+export const BookSubscriptions = `
+    bookAdded:Book!
+`

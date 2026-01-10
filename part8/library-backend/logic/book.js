@@ -42,6 +42,8 @@ export class BookFunctions{
         let author = await this.AuthorModel.findBy({filter:{name:args.author}})
         if(author.length == 0){
           author =  await this.AuthorModel.create({input:{name:args.author}})
+        }else{
+            author = author[0]
         }
 
         let book = await this.BookModel.create({input:{

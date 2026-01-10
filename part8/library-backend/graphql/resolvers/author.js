@@ -15,6 +15,9 @@ export const CreateAuthorResolver = (data)=>{
         },
         Mutation:{
             editAuthor:ErrorHandler(functions.editAuthor),
+        },
+        Subscription:{
+
         }
     }
 }

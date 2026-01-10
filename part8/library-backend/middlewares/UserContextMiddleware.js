@@ -17,3 +17,22 @@ export const UserContextMiddleware =({UserModel}) => async({req}) => {
 
     return context
 }
+
+export const UserContextMiddlewareWS =({UserModel}) => async(data) => {
+    
+    // const auth = cxt ? ctx.headers.authorization : null
+    const auth = false
+    const context = {
+        currentUser : null
+    }
+    if (auth && auth.startsWith('Bearer ')) {
+        const decodedToken = jsonwebtoken.verify(
+            auth.substring(7), env.JWTSECRET
+        )
+        const currentUser = (await UserModel.findBy({filter:{id:decodedToken.id}}))[0]
+
+        context.currentUser = currentUser
+    }
+
+    return context
+}

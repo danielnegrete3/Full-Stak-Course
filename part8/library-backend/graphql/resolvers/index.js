@@ -15,12 +15,14 @@ export const GenereateResolvers = (models) => {
     let resolvers = {}
     let Query = {}
     let Mutation = {}
+    let Subscription = {}
 
     FunctionResolvers.forEach(resolver => {
         Query = {...Query,...resolver.Query}
         Mutation = {...Mutation, ...resolver.Mutation}
+        Subscription = {...Subscription, ...resolver.Subscription}
         resolvers = {...resolvers, ...resolver.Own}
     })
 
-    return {...resolvers,Query,Mutation}
+    return {...resolvers,Query,Mutation,Subscription}
 }

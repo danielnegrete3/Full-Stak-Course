@@ -1,8 +1,9 @@
 import { Button, CardTitle, Col, Container, Row } from "react-bootstrap"
-import { useQuery } from "@apollo/client/react"
+import { useQuery, useSubscription } from "@apollo/client/react"
 import { ALL_BOOKS_ALL_GENRES } from "../graphql/queries/book"
 import { BookRow } from "../components/BookRow"
 import { useState } from "react"
+import { BOOK_ADDED } from "../graphql/subscriptions/book"
 
 
 export const AllBooks = () => {
@@ -12,6 +13,14 @@ export const AllBooks = () => {
         variables:{
             genres:genre.length === 0 ? null:[genre]
         }
+    })
+
+    useSubscription(BOOK_ADDED, {
+        onData: ({ data }) => {
+            // window.alert(data)
+            window.alert("Nuevo libro")
+            console.log(data)
+        },
     })
 
     if (loading) {

@@ -14,6 +14,9 @@ export const CreateUserResolver = (data)=>{
         Mutation:{
             createUser:ErrorHandler(functions.createUser),
             login:ErrorHandler(functions.login)
+        },
+        Subscription:{
+
         }
     }
 }
