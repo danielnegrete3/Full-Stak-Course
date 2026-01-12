@@ -14,9 +14,9 @@ import { GenereateResolvers } from './graphql/resolvers/index.js';
 import { UserModel } from './models/mongodb/User.js';
 import { BookModel } from './models/mongodb/Book.js';
 import { AuthorModel } from './models/mongodb/Author.js';
-import { EventEmitter } from 'events';
+import { PubSub } from 'graphql-subscriptions';
 
-export const ee = new EventEmitter();
+export const pse = new PubSub()
 
 const models = {
   UserModel,

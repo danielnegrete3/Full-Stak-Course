@@ -16,11 +16,30 @@ export const AllBooks = () => {
     })
 
     useSubscription(BOOK_ADDED, {
-        onData: ({ data }) => {
-            // window.alert(data)
-            window.alert("Nuevo libro")
-            console.log(data)
+        onData: ({client, data ,...other}) => {
+            const newBook = data.data.bookAdded
+            console.log(other)
+            window.alert(`New Book : ${newBook.title}`)
+            client.cache.updateQuery(
+                {
+                    query: ALL_BOOKS_ALL_GENRES,
+                    variables: {
+                    genres: genre.length === 0 ? null : [genre]
+                    }
+                },
+                (cachedData) => {
+                    if (!cachedData) return cachedData
+
+                    return {
+                    ...cachedData,
+                    allBooks: cachedData.allBooks.concat(newBook)
+                    }
+                }
+            )
         },
+        onError(error){
+            console.log(error)
+        }
     })
 
     if (loading) {

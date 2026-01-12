@@ -45,12 +45,13 @@ const authLink = new ApolloLink((operation, forward) => {
 const wsLink = new GraphQLWsLink(
   createClient({
     url: wsUrl,
-    connectionParams: () => {
-      const token = localStorage.getItem('library-react');
-      return token && token !== 'null'
-        ? { authorization: `Bearer ${token}` }
-        : {};
-    },
+    // connectionParams:()=> {
+    //   const token = localStorage.getItem('library-react');
+    //   return {
+    //     authToken: token,
+
+    //   }
+    // },
     on: {
       connected: () => console.log('🟢 WS conectado'),
       closed: () => console.log('🔴 WS cerrado'),

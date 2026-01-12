@@ -6,7 +6,7 @@ export const CreateAuthorResolver = (data)=>{
     return {
         Own:{
             Author: {
-                bookCount:ErrorHandler(functions.bookCount)
+                // bookCount:ErrorHandler(functions.bookCount)
             }
         },
         Query:{

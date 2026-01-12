@@ -19,7 +19,13 @@ export class AuthorFunctions{
     }
 
     allAuthors = async()=>{
-        return await this.AuthorModel.getAll()
+        const authors = await this.AuthorModel.getAll()
+        const counts = await this.BookModel.authorsGroup()
+        console.log(authors,counts)
+        const countMap = Object.fromEntries(
+            counts.map(c => [c._id.toString(), c.count])
+        )
+        return authors.map((a) => ({...a.toObject(),bookCount: countMap[a._id.toString()] ?? 0,id:a._id.toString()}))
     }
 
     editAuthor = async(root,args,context)=>{

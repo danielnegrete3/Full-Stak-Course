@@ -53,4 +53,15 @@ export class BookModel {
       static async deleteAll(){
         await Book.deleteMany({})
       }
+
+      static async authorsGroup(){
+        return await Book.aggregate([
+          {
+            $group: {
+              _id: "$author",
+              count: { $sum: 1 }
+            }
+          }
+        ])
+      }
 }

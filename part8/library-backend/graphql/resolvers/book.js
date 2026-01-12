@@ -1,7 +1,6 @@
-import { ee } from "../../index.js"
+import { pse } from "../../index.js"
 import { BookFunctions } from "../../logic/book.js"
 import { ErrorHandler } from "../../utils/ErrorHandler.js"
-import { createAsyncIterator } from "../../utils/pubsub.js"
 
 export const CreateBookResolver = (data)=>{
     const functions = new BookFunctions(data)
@@ -20,14 +19,14 @@ export const CreateBookResolver = (data)=>{
             addBook:ErrorHandler(async (...d)=>{
                 const book = await functions.addBook(...d)
 
-                ee.emit('BOOK_ADDED', { bookAdded: book });
+                pse.publish("BOOK_ADDED",{bookAdded:book})
 
                 return book
             })
         },
         Subscription:{
             bookAdded:{
-                subscribe: () => createAsyncIterator('BOOK_ADDED'),
+                subscribe: () => pse.asyncIterableIterator(["BOOK_ADDED"]),
             }
         }
     }
