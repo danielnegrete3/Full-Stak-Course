@@ -1,27 +1,50 @@
-import { calculateBmi } from "./bmiCalculator"
-import { calculateExercises } from "./exerciseCalculator"
-import { isNotNumber  } from "./utils/text"
+import express from 'express';
+import { isNotNumber } from './utils/text';
+import { calculateBmi } from './bmiCalculator';
+import { calculateExercises } from './exerciseCalculator';
 
-var args = process.argv
-args.shift()
-args.shift()
-var funName = args.shift()
+const app = express();
 
-if(funName === 'bmi'){
-    var h = args.shift()
-    var w = args.shift()
-    if(isNotNumber (h) || isNotNumber (w)) throw Error('need two numeric arguments,height and weight')
-    else console.log(calculateBmi(Number(h),Number(w)))
+app.use(express.json());  // Para parsear JSON
+app.use(express.urlencoded({ extended: true }));
+
+app.get('/hello', (_req, res) => {
+  res.send('Hello Full Stack!');
+});
+
+app.get('/bmi', (req, res) => {
+  const {height,weight} = req.query;
+  if(isNotNumber(height) || isNotNumber(weight)){
+    res.send({error: "malformatted parameters"});
+    return;
+  }
+
+  res.send(calculateBmi(Number(height),Number(weight)));
+});
+
+interface ExerciseRequest {
+  daily_exercises: number[];
+  target: number;
 }
-if(funName === 'calculateExercises'){
-    var arg = args.shift()
-    if(isNotNumber (arg)) throw Error('need be a number the expected hours');
-    var expectedHours = Number(arg);
 
-    var hours = args.map((value) => {
-        if(isNotNumber(value)) return 0
-        return Number(value)
-    })
+app.post('/exercises', (req, res) => {
+  const {daily_exercises,target} = req.body as ExerciseRequest;
 
-    console.log(calculateExercises(hours,expectedHours))
-}
+  if(!daily_exercises || !target){
+    res.status(400).json({error: "parameters missing"});
+    return;
+  }
+
+  if(isNotNumber(target) || !Array.isArray(daily_exercises) || daily_exercises.some(t=>isNotNumber(t))){
+    res.status(400).json({error: "malformatted parameters"});
+    return;
+  }
+
+  res.send(calculateExercises(daily_exercises,target));
+});
+
+const PORT = 3003;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

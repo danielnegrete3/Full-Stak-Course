@@ -1,3 +1,4 @@
+import { isNotNumber } from "./utils/text";
 
 
 export const calculateBmi = (height:number,weight:number):string => {
@@ -15,6 +16,15 @@ export const calculateBmi = (height:number,weight:number):string => {
     if(result < 40.0) return "Obese (Class II)";
 
     return "Obese (Class III)";
-}
+};
 
-// console.log(calculateBmi(180, 74))
+const args = process.argv;
+args.shift();
+const isComand = args.shift()?.endsWith('bmiCalculator.ts');
+
+if(isComand){
+    const h = args.shift();
+    const w = args.shift();
+    if(isNotNumber (h) || isNotNumber (w)) throw Error('need two numeric arguments,height and weight');
+    else console.log(calculateBmi(Number(h),Number(w)));
+}

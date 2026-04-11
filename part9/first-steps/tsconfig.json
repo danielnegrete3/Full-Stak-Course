@@ -1,6 +1,18 @@
 {
   "compilerOptions": {
     "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "strictBindCallApply": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "esModuleInterop": true,
+    "declaration": true,
     "types": ["node"],
   },
+  "include": ["*.ts"],
+  "exclude": ["node_modules", "dist"]
 }

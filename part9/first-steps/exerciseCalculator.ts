@@ -1,9 +1,10 @@
+import { isNotNumber } from "./utils/text";
 
 const resultsExercises = [
     'bad but you can do it',
     'not too bad but could be better',
     'well, you met the objective',
-] as const
+] as const;
 
 
 type ResultsExercisesType = typeof resultsExercises[number]
@@ -21,7 +22,7 @@ interface StatusExercise {
 export const calculateExercises = (hours:Array<number>,expectedHours:number):StatusExercise => {
     const time = hours.reduce((prev,curr)=>prev+curr,0);
     const average = time/hours.length;
-    var rating = (average)/expectedHours;
+    let rating = (average)/expectedHours;
     if(rating < .8)rating = 0;
     if(rating < 1.5)rating = 1;
     else rating = 2;
@@ -34,9 +35,24 @@ export const calculateExercises = (hours:Array<number>,expectedHours:number):Sta
         ratingDescription: resultsExercises[rating],
         target: expectedHours,
         average,
-    }
+    };
 
     return result;
-}
+};
 
-// console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1],2))
+const args = process.argv;
+args.shift();
+const isComand = args.shift()?.endsWith('exerciseCalculator.ts');
+
+if(isComand){
+    const arg = args.shift();
+    if(isNotNumber (arg)) throw Error('need be a number the expected hours');
+    const expectedHours = Number(arg);
+
+    const hours = args.map((value) => {
+        if(isNotNumber(value)) return 0;
+        return Number(value);
+    });
+
+    console.log(calculateExercises(hours,expectedHours));
+}
