@@ -1,10 +1,10 @@
-import { Gender } from "../../types";
+import { Gender, HealthCheckRating } from "../../types";
 
 const isEnumValue = <T extends object>(
   enumObject: T,
   value: unknown
 ): value is T[keyof T] => {
-  return isString(value) && Object.values(enumObject).includes(value);
+  return Object.values(enumObject).includes(value as T[keyof T]);
 };
 
 export const isString = (text: unknown): text is string => {
@@ -20,4 +20,8 @@ export const isDate = (arg: unknown): arg is string | number | Date => {
 
 export const isGender = (arg: unknown): arg is Gender => {
   return isEnumValue(Gender, arg);
+};
+
+export const isHealthCheckRating = (arg: unknown): arg is HealthCheckRating => {
+  return isEnumValue(HealthCheckRating, arg);
 };

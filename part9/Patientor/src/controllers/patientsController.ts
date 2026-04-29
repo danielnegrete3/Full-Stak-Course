@@ -1,16 +1,21 @@
 import { Controller } from "./controller";
-import { Model } from "../models/model";
-import { Patientor } from "../../types";
-import { Request } from "express";
-import { isDate, isGender, isString } from "../helpers/types";
+import { BaseEntry, Entry, Patientor } from "../../types";
+import { Request, Response } from "express";
+import { isDate, isGender, isHealthCheckRating, isString } from "../helpers/types";
 import { v1 } from "uuid";
+import { Patient } from "../models/patient";
+import { Diagnos } from "../models/diagnose";
 
-export class PatientsController extends Controller<Patientor>{
+export class PatientsController extends Controller<Patientor,Patient>{
+    protected diagnos:Diagnos;
+
     constructor(data:{
-        creator:new()=>Model<Patientor>
+        model:Patient
+        diagnos:Diagnos
     })
     {
         super(data); 
+        this.diagnos = data.diagnos;
     }
     
     protected filtersCreate(req: Request): Patientor {
@@ -55,7 +60,90 @@ export class PatientsController extends Controller<Patientor>{
             occupation: data.occupation,
             ssn: data.ssn,
             dateOfBirth: new Date(data.dateOfBirth),
-            gender: data.gender
+            gender: data.gender,
+            entries:[],
         };
+    }
+
+    addEntry(req:Request,res:Response){
+        const body: unknown = req.body;
+        const {id} = req.params;
+
+        if (!id || typeof id !== "string" || !this.model.getById({id})) {
+            throw new Error("Invalid id");
         }
+
+        if (!body || typeof body !== "object") {
+            throw new Error("Invalid body");
+        }
+
+        const b = body as Record<string, unknown>;
+        const stringData = ['description','specialist','type'];
+        
+        if (!b.description || !isDate(b.date)) {
+            throw new Error("Invalid date");
+        }
+
+        stringData.forEach((d)=>{
+            if (!b[d] || !isString(b[d])) {
+                throw new Error(`Invalid ${d}`);
+            }
+        });
+
+        if(!Array.isArray(b.diagnosisCodes)){
+            throw new Error("Invalid diagnosisCodes");
+        }
+
+
+        const codes = this.diagnos.getCodes();
+        
+        const data = {
+            id: v1(),
+            description:b.description,
+            date:b.date,
+            specialist:b.specialist,
+            diagnosisCodes:b.diagnosisCodes.filter((c)=>codes.includes(c as string))
+        } as BaseEntry;
+
+        let entry: Entry;
+
+        if(b.type === 'HealthCheck'){
+            if(!b.healthCheckRating || !isHealthCheckRating(b.healthCheckRating)){
+                throw new Error("Invalid healthCheckRating");
+            }
+
+            entry = {
+                ...data,
+                type :b.type,
+                healthCheckRating : b.healthCheckRating,
+            };
+        }else
+        if(b.type === 'Hospital'){
+            if(!b.hospital || !isString(b.hospital)){
+                throw new Error("Invalid healthCheckRating");
+            }
+            entry = {
+                ...data,
+                type :b.type,
+                hospital : b.hospital,
+            };
+        }else
+        if(b.type === 'OccupationalHealthCare'){
+            if(!b.OccupationalHealthCare || !isString(b.OccupationalHealthCare)){
+                throw new Error("Invalid healthCheckRating");
+            }
+
+            entry = {
+                ...data,
+                type :b.type,
+                OccupationalHealthCare : b.OccupationalHealthCare,
+            };
+        }else
+            throw new Error("Invalid type");
+
+
+        this.model.addEntry({id,entry});
+
+        res.json(data);
+    }
 }

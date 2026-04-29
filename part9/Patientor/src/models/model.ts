@@ -1,13 +1,19 @@
 
-export class Model<T>{
+export class Model<T extends { id: string }>{
     protected items:T[] = [];
 
-    async add(item:T){
+    add(item:T){
         this.items.push(item);
     }
 
-    async get():Promise<T[]>
+    get():T[]
     {
         return this.items;
+    }
+
+    getById({id}:{id:string}):T|null
+    {
+        const item = this.items.find(item => item.id === id);
+        return item || null;
     }
 }

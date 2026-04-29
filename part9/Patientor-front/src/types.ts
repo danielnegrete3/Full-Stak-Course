@@ -1,50 +1,36 @@
-import { Controller } from "./src/controllers/controller";
-import { Model } from "./src/models/model";
+export interface Diagnosis {
+  code: string;
+  name: string;
+  latin?: string;
+  id:string;
+}
 
 export type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never;
 
 export enum Gender {
-    Male = 'male',
-    Female = 'female',
-    Other = 'other'
-};
+  Male = "male",
+  Female = "female",
+  Other = "other"
+}
 
-export interface Diagnose{
-    code: string
-    name: string
-    latin?: string
-    id: string
-};
+export interface Patient {
+  id: string;
+  name: string;
+  occupation: string;
+  gender: Gender;
+  ssn?: string;
+  dateOfBirth?: string;
+  entries:Entry[];
+}
 
-export interface Patientor{
-    id:string
-    name:string
-    dateOfBirth:Date
-    ssn:string
-    gender:Gender
-    occupation:string
-    entries: Entry[]
-};
-
-export interface ModelType{
-    items?:[]
-    add:()=>void
-    get:()=>Array<unknown>
-};
-
-export interface RouterProps<T extends {id:string}, M extends Model<T>, C extends Controller<T,M>>{
-    controller:  C
-    model: M
-};
-
-export type NonSensitivePatient = Omit<Patientor, 'ssn' | 'entries'>;
+export type PatientFormValues = Omit<Patient, "id" | "entries">;
 
 export interface BaseEntry {
   id: string;
   description: string;
-  date: Date;
+  date: string;
   specialist: string;
-  diagnosisCodes?: Diagnose['code'][];
+  diagnosisCodes?: Diagnosis['code'][];
 }
 
 export enum HealthCheckRating {

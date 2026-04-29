@@ -1,10 +1,10 @@
 import { Diagnose } from "../../types";
-import { Model } from "../models/model";
+import { Diagnos } from "../models/diagnose";
 import { Controller } from "./controller";
 
-export class DiagnosesController extends Controller<Diagnose>{
+export class DiagnosesController extends Controller<Diagnose,Diagnos>{
     constructor(data:{
-        creator:new()=>Model<Diagnose>
+        model:Diagnos
     })
     {
         super(data); 
