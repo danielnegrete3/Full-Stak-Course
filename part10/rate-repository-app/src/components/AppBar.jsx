@@ -1,5 +1,6 @@
 import { View, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
+import { Link } from 'react-router-native';
 import Text from './Text';
 
 const styles = StyleSheet.create({
@@ -21,7 +22,8 @@ const styles = StyleSheet.create({
 });
 
 const pages = {
-    'Repositories':'',
+    'Repositories':'/',
+    'Signin':'/signin',
 }
 
 const AppBar = () => {
@@ -29,7 +31,7 @@ const AppBar = () => {
     <View style={styles.container}>
         {
             Object.entries(pages).map(([Name,Page])=>
-                <Text fontWeight='bold'  key={`bar-${Name}`} style={styles.items}>{Name}</Text>
+                <Link to={Page} key={`bar-${Name}`} ><Text fontWeight='bold' style={styles.items}>{Name}</Text></Link>
             )
         }
     </View>
