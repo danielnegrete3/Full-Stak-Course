@@ -8,15 +8,14 @@ const styles = StyleSheet.create({
     display:'flex',
     flexDirection:'row',
     alignItems:'center',
-    alignContent:'center',
-    gap:3,
-    backgroundColor:'#3d3d3d'
+    justifyContent:'start',
+    gap:10,
+    backgroundColor:'#3d3d3d',
     // ...
   },
   items:{
     color:'#EEEEEE',
     fontSize:20,
-    paddingVertical:'auto',
   }
   // ...
 });
