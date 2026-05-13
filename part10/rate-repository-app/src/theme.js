@@ -4,7 +4,8 @@ export default {
         textSecondary: '#586069',
         primary: '#0366d6',
         contrast:'#E3E3E3',
-        base:'#C0C0C0'
+        base:'#C0C0C0',
+        error:'red'
     },
     fontSizes: {
         body: 14,
