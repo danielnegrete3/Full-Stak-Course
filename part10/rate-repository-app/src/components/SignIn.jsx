@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import Text from './Text';
 import { useFormik } from 'formik';
 import theme from '../theme';
@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
     padding:10,
     borderColor:theme.colors.textPrimary,
     borderWidth:2,
-    width:'90%'
+    width:'90%',
+    fontFamily:Platform.select(theme.fonts)
   },
   button:{
     minWidth:'40%',
